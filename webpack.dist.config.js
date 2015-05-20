@@ -17,6 +17,7 @@ module.exports = {
     filename: 'main.js'
   },
 
+  cache: true,
   debug: false,
   devtool: false,
   entry: './src/scripts/app.js',

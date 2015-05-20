@@ -9,16 +9,16 @@ var LoginPage = Backbone.View.extend({
     el: $('#page'), // attaches `this.el` to an existing element. 
 
     initialize: function(){
-      _.bindAll(this, 'render'); // fixes loss of context for 'this' within methods
-
       this.render(); // not all views are self-rendering. This one is.
     },
     render: function(){
      	var props = {};
-      	props.message = 'LoginPage';
+      props.message = 'LoginPage';
 
-		React.render(<ConfluentDraftApp {...props} />, this.el); // jshint ignore:line
+		  React.render(<ConfluentDraftApp {...props} />, this.el); // jshint ignore:line
     }
 });
+
+_.bindAll(LoginPage, _.functions(LoginPage));
 
 module.exports = LoginPage;

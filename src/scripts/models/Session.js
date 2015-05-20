@@ -14,8 +14,6 @@ var Session = Backbone.Model.extend({
     },
 
     initialize: function(){
-        _.bindAll(this);
-
         // Singleton user object
         // Access or listen on this throughout any module with app.session.user
         this.user = new User({});
@@ -121,5 +119,7 @@ var Session = Backbone.Model.extend({
     }
 
 });
+
+_.bindAll(Session, _.functions(Session));
 
 module.exports = Session;

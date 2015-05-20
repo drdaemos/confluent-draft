@@ -6,7 +6,6 @@ var _ = require('underscore');
 global.$ = require('jquery');
 global.jQuery = global.$;
 
-require('react-backbone/with-deps')(React, Backbone, _, $);
 require('semantic-ui');
 
 // Export React so the devtools can find it
@@ -21,7 +20,8 @@ window.app = {
     API : "/api", 
 };
 
-Session = require('./models/session');
+var Session = require('./models/Session');
+var Router = require('./router');
 
 // Global event aggregator
 window.app.eventAggregator = _.extend({}, Backbone.Events);
@@ -36,8 +36,7 @@ Backbone.View.prototype.close = function() {
 };
 
 // Enabling router
-window.app.router = require('./router');
-new window.app.router();
+window.app.router = new Router();
 
 // Enabling session
 window.app.session = new Session();
@@ -56,5 +55,3 @@ window.app.session.checkAuth({
 
     }
 });
-
-Backbone.history.start();  // Запускаем HTML5 History push 

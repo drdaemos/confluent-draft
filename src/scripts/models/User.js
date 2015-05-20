@@ -5,7 +5,6 @@ var _ = require('underscore');
 
 var User = Backbone.Model.extend({
   	initialize: function(){
-            _.bindAll(this);
 	},
 
 	defaults: {
@@ -20,5 +19,7 @@ var User = Backbone.Model.extend({
 	}
 
 });
+
+_.bindAll(User, _.functions(User));
 
 module.exports = User;

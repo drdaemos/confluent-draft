@@ -1,7 +1,7 @@
 'use strict';
 
-var React = require('react/addons');
-var ReactTransitionGroup = React.addons.TransitionGroup;
+var React = require('react');
+var _ = require('underscore');
 
 // CSS
 require('../../styles/main.css');
@@ -12,10 +12,8 @@ var ConfluentDraftApp = React.createClass({
   render: function() {
     return (
       <div className='main'>
-        <ReactTransitionGroup transitionName="fade">
           <img src={imageURL} />
           <p> {this.props.message}</p>
-        </ReactTransitionGroup>
       </div>
     );
   }

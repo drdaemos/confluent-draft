@@ -6,6 +6,8 @@
  */
 'use strict';
 var webpack = require('webpack');
+var path = require('path');
+var BowerWebpackPlugin = require("bower-webpack-plugin");
 
 module.exports = {
 
@@ -27,8 +29,8 @@ module.exports = {
     reasons: true
   },
 
-  resolve: {
-    extensions: ['', '.js']
+  resolve: {    
+    extensions: ['', '.js'],
   },
   module: {
     preLoaders: [{
@@ -58,7 +60,13 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new BowerWebpackPlugin({
+            modulesDirectories: ['bower_components'],
+            manifestFiles: ['bower.json', '.bower.json'],
+            includes: /.*/,
+            excludes: /.*\.less$/
+        })
   ]
 
 };

@@ -1,9 +1,9 @@
 'use strict';
 
 var Backbone = require('backbone');
+var _ = require('underscore');
 var Router = Backbone.Router.extend({
     initialize: function(){
-        _.bindAll(this);
     },   
 
     show: function(view, options){
@@ -63,5 +63,7 @@ var Router = Backbone.Router.extend({
     }
 
 });
+
+_.bindAll(Router, _.functions(Router));
 
 module.exports = Router;
