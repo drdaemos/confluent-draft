@@ -36,4 +36,4 @@ npm-debug.log
 bower_components/
 
 composer.lock
-/src/api/vendor/
+/src/api/app/vendor/
