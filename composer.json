@@ -1,0 +1,14 @@
+{
+    "config": {
+        "vendor-dir":"src/api/app/vendor",
+        "bin-dir":"src/api/app/vendor/bin"
+    },
+    "require": {
+        "slim/slim": "2.*",
+        "slim/views": "0.1.*",
+        "twig/twig": "1.15.*@dev",
+        "phpmailer/phpmailer": "~5.2",
+        "j4mie/idiorm": "~1.5",
+        "slim/logger": "0.1.*"
+    }
+}

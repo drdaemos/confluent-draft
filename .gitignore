@@ -34,3 +34,6 @@ dist
 /src/scripts/main.js
 npm-debug.log
 bower_components/
+
+composer.lock
+/src/api/vendor/
