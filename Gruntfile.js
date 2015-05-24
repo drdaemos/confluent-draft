@@ -61,10 +61,10 @@ module.exports = function (grunt) {
         delay: 500
       },
       dev: {
-        path: 'http://localhost:<%= connect.options.port %>/webpack-dev-server/'
+        path: 'http://confluent-draft:<%= connect.options.port %>/webpack-dev-server/'
       },
       dist: {
-        path: 'http://localhost:<%= connect.options.port %>/'
+        path: 'http://confluent-draft:<%= connect.options.port %>/'
       }
     },
 
@@ -95,7 +95,8 @@ module.exports = function (grunt) {
             expand: true,
             cwd: '<%= pkg.src %>/api/',
             src: ['**'],
-            dest: '<%= pkg.dist %>/api/'
+            dest: '<%= pkg.dist %>/api/',
+            dot: true
           },
         ]
       }

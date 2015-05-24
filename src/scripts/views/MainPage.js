@@ -5,6 +5,9 @@ var _ = require('underscore');
 
 var ConfluentDraftApp = require('../components/ConfluentDraftApp');	
 
+// Elements
+var Page = require('../components/pages/Main');  
+
 var MainPage = Backbone.View.extend({
     el: $('#page'), // attaches `this.el` to an existing element.     
 
@@ -13,7 +16,7 @@ var MainPage = Backbone.View.extend({
     },
     render: function(){
      	var props = {};
-      props.message = 'MainPage';
+      props.content = Page;
       	
 		  React.render(<ConfluentDraftApp {...props} />, this.el); // jshint ignore:line
     }

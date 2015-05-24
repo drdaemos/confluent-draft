@@ -5,3 +5,4 @@ Options -Indexes
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ index.php [L,QSA]
+Header set Access-Control-Allow-Origin "*"

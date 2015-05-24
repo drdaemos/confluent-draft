@@ -5,6 +5,9 @@ var _ = require('underscore');
 
 var ConfluentDraftApp = require('../components/ConfluentDraftApp');	
 
+// Elements
+var Page = require('../components/pages/Login');	
+
 var LoginPage = Backbone.View.extend({
     el: $('#page'), // attaches `this.el` to an existing element. 
 
@@ -13,9 +16,9 @@ var LoginPage = Backbone.View.extend({
     },
     render: function(){
      	var props = {};
-      props.message = 'LoginPage';
+      	props.content = Page;
 
-		  React.render(<ConfluentDraftApp {...props} />, this.el); // jshint ignore:line
+		React.render(<ConfluentDraftApp {...props} />, this.el); // jshint ignore:line
     }
 });
 

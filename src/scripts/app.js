@@ -17,7 +17,7 @@ window.app = {
     collections : {},
     root : "/",
     URL : "/",
-    API : "/api", 
+    API : "http://confluent-draft/api", 
 };
 
 var Session = require('./models/Session');
@@ -35,6 +35,8 @@ Backbone.View.prototype.close = function() {
     }
 };
 
+Backbone.emulateHTTP = true;
+
 // Enabling router
 window.app.router = new Router();
 
@@ -49,9 +51,10 @@ window.app.session.checkAuth({
     complete: function(){
 
         // HTML5 pushState for URLs without hashbangs
-        var hasPushstate = !!(window.history && history.pushState);
-        if(hasPushstate) Backbone.history.start({ pushState: true, root: '/' });
-        else Backbone.history.start();
-
+        // var hasPushstate = !!(window.history && history.pushState);
+        // if(hasPushstate) Backbone.history.start({ pushState: true, root: '/' });
+        // else 
     }
 });
+
+Backbone.history.start();
