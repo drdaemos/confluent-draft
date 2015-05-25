@@ -14,11 +14,11 @@ var Header = require('./Header');
   
 var ConfluentDraftApp = React.createClass({
   render: function() {
-  	var Content = this.props.content;
+  	var Page = this.props.page;
     return (
-	    <div className='main'>
+	    <div className='ui grid'>
     		<Header />
-    		<Content />
+    		<Page />
 	    </div>
     );
   }

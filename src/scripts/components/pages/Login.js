@@ -4,18 +4,24 @@ var React = require('react');
 var _ = require('underscore');
 
 // CSS
-require('../../../styles/page.less');
 
 // Images
 
 // Elements
+var Page = require('../Page');
   
 var Login = React.createClass({
   render: function() {
     return (
-	    <div className='page'>
-    		<div> Login Page </div>
-	    </div>
+	    <Page>
+	    	<div className='row'>
+		    	<div className='wide column'>
+		    		<div className='ui basic segment'>
+		    			<p> Login Page </p>		    			
+		    		</div>
+		    	</div>
+	    	</div>
+	    </Page>
     );
   }
 });

@@ -16,7 +16,7 @@ var LoginPage = Backbone.View.extend({
     },
     render: function(){
      	var props = {};
-      	props.content = Page;
+      	props.page = Page;
 
 		React.render(<ConfluentDraftApp {...props} />, this.el); // jshint ignore:line
     }
