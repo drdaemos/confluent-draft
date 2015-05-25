@@ -4,7 +4,7 @@ var React = require('react');
 var _ = require('underscore');
 
 // CSS
-require('../../styles/page.less');
+require('styles/page.less');
 
 // Images
 

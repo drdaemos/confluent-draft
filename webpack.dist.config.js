@@ -7,6 +7,7 @@
 'use strict';
 
 var webpack = require('webpack');
+var path = require('path');
 var BowerWebpackPlugin = require("bower-webpack-plugin");
 
 module.exports = {
@@ -41,6 +42,7 @@ module.exports = {
   ],
 
   resolve: {
+    root:  path.resolve('./src'),
     extensions: ['', '.js']
   },
 

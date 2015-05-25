@@ -4,13 +4,12 @@ var React = require('react');
 var _ = require('underscore');
 
 // CSS
-require('../../styles/main.less');
+require('styles/main.less');
 
 // Images
-var imageURL = require('../../images/yeoman.png');
 
 // Elements
-var Header = require('./Header');	
+var Header = require('scripts/components/Header');	
   
 var ConfluentDraftApp = React.createClass({
   render: function() {

@@ -3,10 +3,10 @@ var React = require('react');
 var Backbone = require('backbone');
 var _ = require('underscore');
 
-var ConfluentDraftApp = require('../components/ConfluentDraftApp');	
+var ConfluentDraftApp = require('scripts/components/ConfluentDraftApp');	
 
 // Elements
-var Page = require('../components/pages/Login');	
+var Page = require('scripts/components/pages/Login');	
 
 var LoginPage = Backbone.View.extend({
     el: $('#page'), // attaches `this.el` to an existing element. 

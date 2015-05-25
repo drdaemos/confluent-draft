@@ -8,7 +8,7 @@ var _ = require('underscore');
 // Images
 
 // Elements
-var Page = require('../Page');
+var Page = require('scripts/components/Page');
   
 var Main = React.createClass({
   render: function() {

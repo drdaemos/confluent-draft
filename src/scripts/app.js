@@ -20,7 +20,7 @@ window.app = {
     API : "http://confluent-draft/api", 
 };
 
-var Session = require('./models/Session');
+var Session = require('scripts/models/Session');
 var Router = require('./router');
 
 // Global event aggregator

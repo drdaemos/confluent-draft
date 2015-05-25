@@ -2,7 +2,7 @@
 
 var Backbone = require('backbone');
 var _ = require('underscore');
-var User = require('./User');
+var User = require('scripts/models/User');
 
 var Session = Backbone.Model.extend({
 
