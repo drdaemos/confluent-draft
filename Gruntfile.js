@@ -68,6 +68,15 @@ module.exports = function (grunt) {
       }
     },
 
+    chmod: {
+      options: {
+        mode: '777'
+      },
+      api: {
+        src: ['dist/api/app/logs/**', 'dist/api/app/config/**']
+      }
+    },
+
     karma: {
       unit: {
         configFile: 'karma.conf.js'
@@ -75,6 +84,17 @@ module.exports = function (grunt) {
     },
 
     copy: {
+      api: {
+        files: [
+          {
+            expand: true,
+            cwd: '<%= pkg.src %>/api/',
+            src: ['**'],
+            dest: '<%= pkg.dist %>/api/',
+            dot: true
+          }
+        ]
+      },
       dist: {
         files: [
           // includes files within path
@@ -90,19 +110,20 @@ module.exports = function (grunt) {
             expand: true,
             src: ['<%= pkg.src %>/images/*'],
             dest: '<%= pkg.dist %>/images/'
-          },
-          {
-            expand: true,
-            cwd: '<%= pkg.src %>/api/',
-            src: ['**'],
-            dest: '<%= pkg.dist %>/api/',
-            dot: true
-          },
+          }
         ]
       }
     },
 
     clean: {
+      api: {
+        files: [{
+          dot: true,
+          src: [
+            '<%= pkg.dist %>/api'
+          ]
+        }]
+      },
       dist: {
         files: [{
           dot: true,
@@ -128,6 +149,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['karma']);
 
   grunt.registerTask('build', ['clean', 'copy', 'webpack']);
+
+  grunt.registerTask('build-api', ['clean:api', 'copy:api', 'chmod'])
 
   grunt.registerTask('default', ['build']);
 };
