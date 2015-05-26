@@ -6,9 +6,9 @@ var _ = require('underscore');
 var ConfluentDraftApp = require('scripts/components/ConfluentDraftApp');	
 
 // Elements
-var Page = require('scripts/components/pages/Main');  
+var Page = require('scripts/components/pages/Dashboard');  
 
-var MainPage = Backbone.View.extend({
+var DashboardPage = Backbone.View.extend({
     el: $('#page'), // attaches `this.el` to an existing element.     
 
     initialize: function(){
@@ -22,6 +22,6 @@ var MainPage = Backbone.View.extend({
     }
 });
 
-_.bindAll(MainPage, _.functions(MainPage));
+_.bindAll(DashboardPage, _.functions(DashboardPage));
 
-module.exports = MainPage;
+module.exports = DashboardPage;

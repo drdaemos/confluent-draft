@@ -55,10 +55,11 @@ var Router = Backbone.Router.extend({
     routes: {
         "": "start", // Пустой hash-тэг
         "login": "login",
+        "dashboard": "start",
     },
 
     start: function () {
-        this.switchTo('MainPage');
+        this.switchTo('DashboardPage');
     },
 
     login: function () {

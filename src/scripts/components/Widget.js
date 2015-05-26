@@ -12,9 +12,11 @@ require('styles/widget.less');
   
 var Widget = React.createClass({
   render: function() {
+  	var classes = this.props.width + ' wide column';
     return (
-	    <div className='{this.props.width} column'>
-    		<div className='ui segment grid widget'>
+	    <div className={classes}>
+    		<div className='ui segment widget'>
+	    		<div className='ui dividing large header'>{ this.props.title }</div>
 				{ this.props.children }
 			</div>
 	    </div>

@@ -12,12 +12,31 @@ var Widget = require('scripts/components/Widget');
   
 var OpenedTasks = React.createClass({
   render: function() {
-  	var props = {};
-  	props.width = 'ten';
     return (
-	    <Widget {...props}>
-	    	<div className='ui huge header'> Opened Tasks </div>
-		    <p> Some fake tasks</p>
+	    <Widget width={'ten'} title={'Opened Tasks'}>
+		    <div className='ui relaxed list'>
+          <div className='item'>
+            <i className='tag icon'></i>
+            <div className='content'>
+              <a className='header'> DRAFT-1 Prepare UML Diagrams for a project </a>
+              <div className='description'> Use Case, Classes, ER, Deployment and DFD are needed </div>
+            </div>
+          </div>
+          <div className='item'>
+            <i className='tag icon'></i>
+            <div className='content'>
+              <a className='header'> DRAFT-2 Describe program business model and processes </a>
+              <div className='description'> A few pages should be enough. </div>
+            </div>
+          </div>
+          <div className='item'>
+            <i className='tag icon'></i>
+            <div className='content'>
+              <a className='header'> DRAFT-3 Configure build system </a>
+              <div className='description'>I recommend using grunt, look for some examples at blabla.com </div>
+            </div>
+          </div>
+        </div>
 	    </Widget>
     );
   }

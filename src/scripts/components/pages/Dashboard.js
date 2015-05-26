@@ -11,13 +11,13 @@ var _ = require('underscore');
 var Page = require('scripts/components/Page');
 var OpenedTasks = require('scripts/components/widgets/OpenedTasks');
   
-var Main = React.createClass({
+var Dashboard = React.createClass({
   render: function() {
     return (
 	    <Page>
 	    	<div className='row'>
 		    	<div className='wide column'>
-		    		<div className='ui basic segment'>
+		    		<div className='ui grid stackable'>
 		    			<OpenedTasks />
 		    		</div>
 		    	</div>
@@ -27,5 +27,5 @@ var Main = React.createClass({
   }
 });
 
-module.exports = Main;
+module.exports = Dashboard;
 
