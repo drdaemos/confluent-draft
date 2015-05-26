@@ -50,16 +50,31 @@ var Router = Backbone.Router.extend({
         // if(!hasPushState) this.navigate(window.location.pathname.substring(1), {trigger: true, replace: true});
         //else 
         this.show(new View());
+        this.globalCalls();
+    },
+
+    globalCalls: function() {
+        $('.dropdown').dropdown();
     },
 
     routes: {
         "": "start", // Пустой hash-тэг
         "login": "login",
         "dashboard": "start",
+        "tasks": "tasks",
+        "projects": "projects"
     },
 
     start: function () {
         this.switchTo('DashboardPage');
+    },
+
+    tasks: function () {
+        this.switchTo('TasksPage');
+    },
+
+    projects: function () {
+        this.switchTo('ProjectsPage');
     },
 
     login: function () {

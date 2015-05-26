@@ -11,7 +11,7 @@ var _ = require('underscore');
 var Page = require('scripts/components/Page');
 var OpenedTasks = require('scripts/components/widgets/OpenedTasks');
   
-var Dashboard = React.createClass({
+var Component = React.createClass({
   render: function() {
     return (
 	    <Page>
@@ -27,5 +27,5 @@ var Dashboard = React.createClass({
   }
 });
 
-module.exports = Dashboard;
+module.exports = Component;
 

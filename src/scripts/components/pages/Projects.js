@@ -9,6 +9,8 @@ var _ = require('underscore');
 
 // Elements
 var Page = require('scripts/components/Page');
+var Projects = require('scripts/components/widgets/Projects');
+var ProjectFilters = require('scripts/components/widgets/ProjectFilters');
   
 var Component = React.createClass({
   render: function() {
@@ -16,8 +18,9 @@ var Component = React.createClass({
 	    <Page>
 	    	<div className='row'>
 		    	<div className='wide column'>
-		    		<div className='ui basic segment'>
-		    			<p> Login Page </p>		    			
+		    		<div className='ui grid stackable'>
+		    			<ProjectFilters />
+		    			<Projects />
 		    		</div>
 		    	</div>
 	    	</div>

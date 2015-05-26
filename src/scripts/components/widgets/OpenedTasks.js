@@ -10,7 +10,7 @@ var _ = require('underscore');
 // Elements
 var Widget = require('scripts/components/Widget');
   
-var OpenedTasks = React.createClass({
+var Component = React.createClass({
   render: function() {
     return (
 	    <Widget width={'ten'} title={'Opened Tasks'}>
@@ -42,5 +42,5 @@ var OpenedTasks = React.createClass({
   }
 });
 
-module.exports = OpenedTasks;
+module.exports = Component;
 

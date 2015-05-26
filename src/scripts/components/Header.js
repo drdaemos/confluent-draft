@@ -22,27 +22,27 @@ Header.Navbar = React.createClass({
   render: function() {
     return (
 		<div className='ui navbar menu inverted page grid'>
-	  		<a className='launch item active'>
+	  		<a className='launch item active' href='#dashboard'>
 		      <span> Dashboard </span>
 		    </a>
-		    <a className='item'>
+		    <a className='item' href='#projects'>
 		      <span> Projects </span>
 		    </a>
-		    <a className='item'>
+		    <a className='item' href='#tasks'>
 		      <span> Tasks </span>
 		    </a>
-		    <a className='item'>
+		    <a className='item' href='#team'>
 		      <span> Team </span>
 		    </a>
 		    <div className='right menu'>
-		    	<a className="ui dropdown item">
-				  	<span className="text user">james@rolfe.com</span>
+		    	<div className="ui dropdown item">
+				  	<div className="text user">james@rolfe.com</div>
 				  	<i className="dropdown icon"></i>
 				  	<div className="menu">
-					    <div className="item">Profile</div>
-					    <div className="item">Logout</div>
+					    <a className="item" href="#profile">Profile</a>
+					    <a className="item" href="#logout">Logout</a>
 				  	</div>
-				</a>
+				</div>
 		    </div>
 		</div>
     );
