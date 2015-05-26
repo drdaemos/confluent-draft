@@ -4,16 +4,7 @@ namespace app\routes;
 
 $app->group('/auth', function () use ($app) {
     $app->get('/', function () use ($app) {
-        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-        $authToken = isset($_SESSION['auth_token']) ? $_SESSION['auth_token'] : null;
-        if ($userId && $authToken) {
-            $user = \ORM::forTable('users')->where(
-                array(
-                    'id' => $userId,
-                    'auth_token' => $authToken,
-                )
-            )->findOne();
-        }
+        $user = \models\Users::checkAuth();
         if (!empty($user)) {
             $data = $user->asArray();
             unset($data['password']);
@@ -30,11 +21,15 @@ $app->group('/auth', function () use ($app) {
         $password = $app->request->post('password');
 
         if ($username && $password) {
-            $user = \ORM::forTable('users')->where('username', $username)->findOne();
+            $user = \models\Users::getSingle(
+                array(
+                    'username' => $username,
+                )
+            );
         }
 
         if (!empty($user) && password_verify($password, $user->password)) {
-            $user->auth_token = bin2hex(openssl_random_pseudo_bytes(32));
+            $user->auth_token = \models\Users::generateToken();
             $user->save();
             $_SESSION['user_id'] = $user->id;
             $_SESSION['auth_token'] = $user->auth_token;
@@ -55,26 +50,30 @@ $app->group('/auth', function () use ($app) {
         $password = $app->request->post('password');
 
         if ($username && $password) {
-            $user = \ORM::forTable('users')->where('username', $username)->findOne();
+            $user = \models\Users::getSingle(
+                array(
+                    'username' => $username,
+                )
+            );
         }
 
         if (!empty($user)) {
             $app->response->headers->set('Content-Type', 'application/json');
             $app->response->write(json_encode(array('error' => 'Username has been taken.')));
         } else {
-            $user = \ORM::forTable('users')->create();
+            $user = \models\Users::create();
             $user->username = $username;
             $user->name = $name;
-            $user->password = password_hash($password, \PASSWORD_BCRYPT);
-            $user->auth_token = bin2hex(openssl_random_pseudo_bytes(32));
+            $user->deleted = false;
+            $user->password = \models\Users::getHash($password);
+            $user->auth_token = \models\Users::generateToken();
             $user->save();
 
             $_SESSION['user_id'] = $user->id;
             $_SESSION['auth_token'] = $user->auth_token;
 
             $data = $user->asArray();
-            unset($data['password']);
-            unset($data['auth_token']);
+            unset($data['password'], $data['auth_token']);
             $app->response->headers->set('Content-Type', 'application/json');
             $app->response->write(json_encode($data));
         }

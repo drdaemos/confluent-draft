@@ -9,6 +9,7 @@ var _ = require('underscore');
 
 // Elements
 var Page = require('scripts/components/Page');
+var OpenedTasks = require('scripts/components/widgets/OpenedTasks');
   
 var Main = React.createClass({
   render: function() {
@@ -17,7 +18,7 @@ var Main = React.createClass({
 	    	<div className='row'>
 		    	<div className='wide column'>
 		    		<div className='ui basic segment'>
-		    			<p> Main Page </p>
+		    			<OpenedTasks />
 		    		</div>
 		    	</div>
 	    	</div>
