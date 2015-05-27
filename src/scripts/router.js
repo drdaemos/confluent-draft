@@ -62,6 +62,7 @@ var Router = Backbone.Router.extend({
         "login": "login",
         "dashboard": "start",
         "tasks": "tasks",
+        "task": "task",
         "projects": "projects"
     },
 
@@ -71,6 +72,10 @@ var Router = Backbone.Router.extend({
 
     tasks: function () {
         this.switchTo('TasksPage');
+    },
+
+    task: function () {
+        this.switchTo('TaskPage');
     },
 
     projects: function () {
