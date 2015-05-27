@@ -10,7 +10,7 @@ var Session = Backbone.Model.extend({
     // These will be overriden after the initial checkAuth
     defaults: {
         logged_in: false,
-        user_id: ''
+        user_id: '',
     },
 
     initialize: function(){
@@ -39,8 +39,8 @@ var Session = Backbone.Model.extend({
         var self = this;
         this.fetch({ 
             success: function(mod, res){
-                if(!res.error && res.user){
-                    self.updateSessionUser(res.user);
+                if(res && !res.error){
+                    self.updateSessionUser(res);
                     self.set({ logged_in : true });
                     if('success' in callback) callback.success(mod, res);    
                 } else {

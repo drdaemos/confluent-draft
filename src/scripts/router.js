@@ -32,7 +32,7 @@ var Router = Backbone.Router.extend({
                     // If auth successful, render inside the page wrapper
                     this.el.html( self.currentView.render());
                 }, error: function(res){
-                    self.navigate("/#login", { trigger: true, replace: true });
+                    self.navigate("login", { trigger: true });
                 }
             });
 
@@ -44,12 +44,12 @@ var Router = Backbone.Router.extend({
 
     },
 
-    switchTo: function(view) {
+    switchTo: function(view, options) {
         var View = require('./views/' + view);
         // var hasPushState = !!(window.history && history.pushState);
         // if(!hasPushState) this.navigate(window.location.pathname.substring(1), {trigger: true, replace: true});
         //else 
-        this.show(new View());
+        this.show(new View(), options);
         this.globalCalls();
     },
 
@@ -67,19 +67,27 @@ var Router = Backbone.Router.extend({
     },
 
     start: function () {
-        this.switchTo('DashboardPage');
+        this.switchTo('DashboardPage', {
+            requiresAuth: true
+        });
     },
 
     tasks: function () {
-        this.switchTo('TasksPage');
+        this.switchTo('TasksPage', {
+            requiresAuth: true
+        });
     },
 
     task: function () {
-        this.switchTo('TaskPage');
+        this.switchTo('TaskPage', {
+            requiresAuth: true
+        });
     },
 
     projects: function () {
-        this.switchTo('ProjectsPage');
+        this.switchTo('ProjectsPage', {
+            requiresAuth: true
+        });
     },
 
     login: function () {
