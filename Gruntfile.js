@@ -120,7 +120,8 @@ module.exports = function (grunt) {
         files: [{
           dot: true,
           src: [
-            '<%= pkg.dist %>/api'
+            '<%= pkg.dist %>/api',
+            '!<%= pkg.dist %>/**/*.db'
           ]
         }]
       },
@@ -128,7 +129,8 @@ module.exports = function (grunt) {
         files: [{
           dot: true,
           src: [
-            '<%= pkg.dist %>'
+            '<%= pkg.dist %>',
+            '!<%= pkg.dist %>/**/*.db'
           ]
         }]
       }

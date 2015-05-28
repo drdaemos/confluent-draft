@@ -9,7 +9,6 @@ var _ = require('underscore');
 
 // Elements
 var Page = require('scripts/components/Page');
-var Login = require('scripts/components/widgets/Login');
   
 var Component = React.createClass({
   render: function() {
@@ -17,8 +16,10 @@ var Component = React.createClass({
 	    <Page>
 	    	<div className='row'>
 		    	<div className='wide column'>
-		    		<div className='ui centered grid stackable'>
-		    			<Login />
+		    		<div className='ui basic segment'>
+	    				<div className='ui large header'> Sorry, pal, this page is not available.</div>		
+	    				<p> Either you do not have access to this page or it does not exist. </p>	
+	    				<p> Try to look elsewhere. </p>	
 		    		</div>
 		    	</div>
 	    	</div>

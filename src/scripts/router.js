@@ -30,7 +30,7 @@ var Router = Backbone.Router.extend({
             window.app.session.checkAuth({
                 success: function(res){
                     // If auth successful, render inside the page wrapper
-                    this.el.html( self.currentView.render());
+                    self.el.html( self.currentView.render());
                 }, error: function(res){
                     self.navigate("login", { trigger: true });
                 }
@@ -49,8 +49,10 @@ var Router = Backbone.Router.extend({
         // var hasPushState = !!(window.history && history.pushState);
         // if(!hasPushState) this.navigate(window.location.pathname.substring(1), {trigger: true, replace: true});
         //else 
-        this.show(new View(), options);
+        var view = new View();
+        this.show(view, options);
         this.globalCalls();
+        if (typeof(view.jsCalls) == 'function') view.jsCalls();
     },
 
     globalCalls: function() {
@@ -63,7 +65,8 @@ var Router = Backbone.Router.extend({
         "dashboard": "start",
         "tasks": "tasks",
         "task": "task",
-        "projects": "projects"
+        "projects": "projects",
+        "*path": "notFound"
     },
 
     start: function () {
@@ -92,6 +95,10 @@ var Router = Backbone.Router.extend({
 
     login: function () {
         this.switchTo('LoginPage');
+    },
+
+    notFound: function () {
+        this.switchTo('NotFoundPage');
     }
 
 });

@@ -45,16 +45,15 @@ window.app.session = new Session();
 
 // Check the auth status upon initialization,
 // before rendering anything or matching routes
-// window.app.session.checkAuth({
+window.app.session.checkAuth({
 
-//     // Start the backbone routing once we have captured a user's auth status
-//     complete: function(){
+    // Start the backbone routing once we have captured a user's auth status
+    complete: function(){
+        Backbone.history.start();
 
-//         // HTML5 pushState for URLs without hashbangs
-//         // var hasPushstate = !!(window.history && history.pushState);
-//         // if(hasPushstate) Backbone.history.start({ pushState: true, root: '/' });
-//         // else 
-//     }
-// });
-
-Backbone.history.start();
+        // HTML5 pushState for URLs without hashbangs
+        // var hasPushstate = !!(window.history && history.pushState);
+        // if(hasPushstate) Backbone.history.start({ pushState: true, root: '/' });
+        // else 
+    }
+});

@@ -65,25 +65,24 @@ var Session = Backbone.Model.extend({
     postAuth: function(opts, callback, args){
         var self = this;
         var postData = _.omit(opts, 'method');
-        if(DEBUG) console.log(postData);
+        console.log(postData);
         $.ajax({
             url: this.url() + '/' + opts.method,
-            contentType: 'application/json',
-            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
             type: 'POST',
             beforeSend: function(xhr) {
                 // Set the CSRF Token in the header for security
                 var token = $('meta[name="csrf-token"]').attr('content');
                 if (token) xhr.setRequestHeader('X-CSRF-Token', token);
             },
-            data:  JSON.stringify( _.omit(opts, 'method') ),
+            data: $.param(postData),
             success: function(res){
 
                 if( !res.error ){
                     if(_.indexOf(['login', 'signup'], opts.method) !== -1){
 
-                        self.updateSessionUser( res.user || {} );
-                        self.set({ user_id: res.user.id, logged_in: true });
+                        self.updateSessionUser( res || {} );
+                        self.set({ user_id: res.id, logged_in: true });
                     } else {
                         self.set({ logged_in: false });
                     }
@@ -103,6 +102,7 @@ var Session = Backbone.Model.extend({
 
 
     login: function(opts, callback, args){
+        console.log(opts, callback);
         this.postAuth(_.extend(opts, { method: 'login' }), callback);
     },
 
