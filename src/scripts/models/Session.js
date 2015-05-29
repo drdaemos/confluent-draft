@@ -102,7 +102,6 @@ var Session = Backbone.Model.extend({
 
 
     login: function(opts, callback, args){
-        console.log(opts, callback);
         this.postAuth(_.extend(opts, { method: 'login' }), callback);
     },
 

@@ -11,7 +11,7 @@ var _ = require('underscore');
 var Widget = require('scripts/components/Widget');
   
 var Component = React.createClass({
-  formName: 'login-form',
+  formName: 'signup-form',
   addFormActions: function() {
       var rules = {
         name: {
@@ -19,7 +19,16 @@ var Component = React.createClass({
           rules: [
             {
               type   : 'empty',
-              prompt : 'Please enter your name'
+              prompt : 'Please enter your display name'
+            }
+          ]
+        },
+        userame: {
+          identifier  : 'username',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter your account name'
             }
           ]
         },
@@ -46,14 +55,15 @@ var Component = React.createClass({
   },
   tryLogin: function(e) {
     e.preventDefault();
-    console.log(e.target);
+    var username = React.findDOMNode(this.refs.username).value.trim();
     var name = React.findDOMNode(this.refs.name).value.trim();
     var pwd = React.findDOMNode(this.refs.password).value.trim();
-    if (!name || !pwd) {
+    if (!name || !pwd || !username) {
       return;
     }
-    window.app.session.login({
-      username: name,
+    window.app.session.signup({
+      name: name,
+      username: username,
       password: pwd
     }, {
       success: function(res){
@@ -70,7 +80,7 @@ var Component = React.createClass({
   },
   render: function() {
     return (
-        <Widget width={'six'} title={'Login'}>
+        <Widget width={'six'} title={'Signup'}>
             <form className='ui form' id={this.formName} > 
 
               <div className='required field'>
@@ -78,6 +88,13 @@ var Component = React.createClass({
                 <div className='ui icon input'>
                   <input type='text' placeholder='Username' name='name' ref='name' />
                   <i className='user icon'></i>
+                </div>
+              </div>
+              <div className='required field'>
+                <label>Login</label>
+                <div className='ui icon input'>
+                  <input type='text' placeholder='Login' name='username' ref='username' />
+                  <i className='sign in icon'></i>
                 </div>
               </div>
               <div className='required field'>

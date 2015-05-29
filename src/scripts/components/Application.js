@@ -12,12 +12,6 @@ require('styles/main.less');
 var Header = require('scripts/components/Header');	
   
 var Application = React.createClass({
-	componentDidMount: function() {	
-        $('.dropdown').dropdown();
-	},
-	componentDidUpdate: function() {
-        $('.dropdown').dropdown();
-	},
 	render: function() {
 	  	var Page = require('scripts/components/pages/' + this.props.page);
 	    return (

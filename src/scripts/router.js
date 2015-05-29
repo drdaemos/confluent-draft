@@ -33,6 +33,8 @@ var Router = Backbone.Router.extend({
     routes: {
         "": "start", // Пустой hash-тэг
         "login": "login",
+        "logout": "logout",
+        "signup": "signup",
         "dashboard": "start",
         "tasks": "tasks",
         "task": "task",
@@ -71,6 +73,20 @@ var Router = Backbone.Router.extend({
     login: function () {
         this.show({
             page: 'Login'
+        });
+    },
+
+    logout: function () {
+        window.app.session.logout({}, {
+          success: function(res){
+              window.app.router.navigate("login", { trigger: true });
+          }
+        });
+    },
+
+    signup: function () {
+        this.show({
+            page: 'Signup'
         });
     },
 

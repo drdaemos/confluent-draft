@@ -11,9 +11,18 @@ var _ = require('underscore');
 var Widget = require('scripts/components/Widget');
   
 var Component = React.createClass({
+  getInitialState: function() {
+    return {id: _.uniqueId('project-filter-')};
+  },
+  componentDidMount: function() { 
+    $('#' + this.state.id + ' .search.dropdown').dropdown();
+  },
+  componentDidUpdate: function() {
+    $('#' + this.state.id + ' .search.dropdown').dropdown();
+  },
   render: function() {
     return (
-        <Widget width={'four'} title={'Filters'}>
+        <Widget width={'four'} title={'Filters'} id={this.state.id}>
             <div className='ui form'> 
 
               <div className='field'>
