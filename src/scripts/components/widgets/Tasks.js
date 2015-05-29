@@ -24,7 +24,7 @@ var Component = React.createClass({
                     </td>
                     <td>
                         <div className='content'>
-                          <a className='header'> DRAFT-1 Prepare UML Diagrams for a project </a>
+                          <a className='header' href="#task"> DRAFT-1 Prepare UML Diagrams for a project </a>
                           <div className='description'> Use Case, Classes, ER, Deployment and DFD are needed </div>
                         </div>    
                     </td>
