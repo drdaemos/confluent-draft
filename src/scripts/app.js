@@ -26,8 +26,6 @@ var Router = require('./router');
 // Global event aggregator
 window.app.eventAggregator = _.extend({}, Backbone.Events);
 
-Backbone.emulateHTTP = true;
-
 // Enabling router
 window.app.router = new Router();
 

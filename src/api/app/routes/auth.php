@@ -1,6 +1,15 @@
 <?php
 
-namespace app\routes;
+function authorize() {
+    $user = \models\Users::checkAuth();
+    if (empty($user)) {
+        $app = \Slim\Slim::getInstance();
+        $app->response->setStatus(403);
+        $app->response->headers->set('Content-Type', 'application/json');
+        $app->response->setBody(json_encode(array('error' => 'unauthorized')));
+        $app->stop();
+    }
+};
 
 $app->group('/auth', function () use ($app) {
     $app->get('/', function () use ($app) {
@@ -26,7 +35,6 @@ $app->group('/auth', function () use ($app) {
                     'username' => $username,
                 )
             );
-            $app->log->info($user);
         }
 
         if (!empty($user) && password_verify($password, $user->password)) {

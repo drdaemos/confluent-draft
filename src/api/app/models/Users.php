@@ -9,6 +9,24 @@ class Users
     const DB_TABLE = 'users';
     const DB_TABLE_ROLES = 'users_roles';
 
+    // overrides
+
+    // end of overrides
+
+    public static function clean($item)
+    {
+        unset($item['password'], $item['auth_token']);
+        return $item;
+    }
+
+    public static function cleanArray($array)
+    {
+        foreach ($array as &$item) {
+            $item = static::clean($item);
+        }
+        return $array;
+    }
+
     public static function generateToken()
     {
         return bin2hex(openssl_random_pseudo_bytes(32));
@@ -36,7 +54,7 @@ class Users
             return false;
         }
     }
-
+    
     public static function getRoles(){
         $query = \ORM::for_table(static::DB_TABLE_ROLES);
         $items = $query->findArray();

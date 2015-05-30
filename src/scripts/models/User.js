@@ -15,7 +15,7 @@ var User = Backbone.Model.extend({
 	},
 
 	url: function(){
-	    return window.app.API + '/user';
+	    return window.app.API + '/users';
 	}
 
 });
