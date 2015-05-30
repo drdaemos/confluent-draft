@@ -18,6 +18,9 @@ var Widget = React.createClass({
     		<div className='ui segment widget'>
 	    		<div className='ui dividing large header'>{ this.props.title }</div>
 				{ this.props.children }
+				<div className='ui inverted dimmer'>
+				    <div className='ui loader'></div>
+				</div>
 			</div>
 	    </div>
     );

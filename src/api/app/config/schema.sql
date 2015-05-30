@@ -7,9 +7,9 @@ CREATE TABLE IF NOT EXISTS options
 CREATE TABLE IF NOT EXISTS users 
 (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	deleted INTEGER NOT NULL, 
+	deleted INTEGER, 
 	name TEXT, 
-	username TEXT , 
+	username TEXT, 
 	password TEXT, 
 	auth_token TEXT UNIQUE,
 	approved INTEGER,
@@ -33,22 +33,41 @@ CREATE TABLE IF NOT EXISTS users_tasks
 CREATE TABLE IF NOT EXISTS projects 
 (
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
-	deleted INTEGER NOT NULL,
+	deleted INTEGER,
 	name TEXT NOT NULL, 
 	state INTEGER,
 	description TEXT,
 	client_data TEXT,
-	tag TEXT UNIQUE
+	tag TEXT UNIQUE,
+	started_date TEXT
+);
+CREATE TABLE IF NOT EXISTS projects_states 
+(
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+	state TEXT NOT NULL UNIQUE
 );
 CREATE TABLE IF NOT EXISTS tasks 
 (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	deleted INTEGER NOT NULL, 
+	deleted INTEGER, 
 	name TEXT NOT NULL, 
 	state INTEGER,
 	description TEXT,
 	estimation TEXT,
-	progress TEXT
+	progress TEXT,
+	started_date TEXT
+);
+CREATE TABLE IF NOT EXISTS tasks_states 
+(
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+	state TEXT NOT NULL UNIQUE
+);
+CREATE TABLE IF NOT EXISTS tasks_comments
+(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	created_id INTEGER NOT NULL,
+	message TEXT,
+	created_date TEXT
 );
 CREATE TABLE IF NOT EXISTS project_files 
 (
@@ -62,10 +81,8 @@ CREATE TABLE IF NOT EXISTS project_files
 CREATE TABLE IF NOT EXISTS events 
 (
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
-	type INTEGER NOT NULL,
-	object_class TEXT NOT NULL,
-	object_id INTEGER NOT NULL,
 	time TEXT NOT NULL,
-	additional_data TEXT NOT NULL,
 	message TEXT NOT NULL
 );
+
+

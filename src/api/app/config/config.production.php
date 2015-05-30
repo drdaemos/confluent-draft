@@ -1,6 +1,6 @@
 <?php
 
-define("DB_VERSION", "0.0.1");
+define("DB_VERSION", "0.0.2");
 define("DB_FILE", "./config/app.db");
 
 // Slim configuration
@@ -73,26 +73,15 @@ function generateSchema()
     $version_record->value = constant("DB_VERSION");
     $version_record->save();
 
-    //generateData();
+    generateData();
 }
 function generateData()
 {
-    // global $app;
-    // $app->log->info("Generating data.");
-    // //types
-    // $types = [
-    //     "landing" => "Landing page",
-    //     "informational" => "Информационный сайт",
-    //     "corporate" => "Корпоративный сайт",
-    //     "shop" => "Интернет-магазин",
-    //     "vkgroup" => "Группа VK",
-    //     "style" => "Фирменный стиль",
-    //     "cases" => "Кейсы"
-    // ];
-    // foreach ($types as $key => $name) {
-    //     $type = ORM::for_table("project_types")->create();
-    //     $type->name = $name;
-    //     $type->link = $key;
-    //     $type->save();
-    // }
+    global $app;
+    $app->log->info("Generating data.");
+    //types
+    $data = file_get_contents('./config/demo_data.sql');
+    //version
+    ORM::get_db()
+        ->exec($data);
 }

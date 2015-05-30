@@ -37,7 +37,7 @@ var Component = React.createClass({
                 <label>State</label>
                 <select className='ui search dropdown'>
                   <option value="">Any state</option>
-                  <option value="1">Started</option>
+                  <option value="1">On hold</option>
                   <option value="2">In progress</option>
                   <option value="3">Finished</option>
                 </select>

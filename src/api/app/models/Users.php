@@ -7,6 +7,7 @@ class Users
     use \models\CrudOperations;
 
     const DB_TABLE = 'users';
+    const DB_TABLE_ROLES = 'users_roles';
 
     public static function generateToken()
     {
@@ -34,5 +35,12 @@ class Users
         } else {
             return false;
         }
+    }
+
+    public static function getRoles(){
+        $query = \ORM::for_table(static::DB_TABLE_ROLES);
+        $items = $query->findArray();
+
+        return $items;
     }
 }

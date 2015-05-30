@@ -47,10 +47,10 @@ var Component = React.createClass({
                 <label>State</label>
                 <select className='ui search dropdown'>
                   <option value="">Any state</option>
-                  <option value="1">Star</option>
+                  <option value="1">Opened</option>
                   <option value="2">In progress</option>
                   <option value="3">Completed</option>
-                  <option value="3">Approved</option>
+                  <option value="4">Approved</option>
                 </select>
               </div>
 

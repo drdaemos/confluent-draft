@@ -26,6 +26,7 @@ $app->group('/auth', function () use ($app) {
                     'username' => $username,
                 )
             );
+            $app->log->info($user);
         }
 
         if (!empty($user) && password_verify($password, $user->password)) {
@@ -77,6 +78,12 @@ $app->group('/auth', function () use ($app) {
             $app->response->headers->set('Content-Type', 'application/json');
             $app->response->write(json_encode($data));
         }
+    });
+    $app->get('/hash/:str', function ($str) use ($app) {
+        $str_hash = \models\Users::getHash($str);
+
+        $app->response->headers->set('Content-Type', 'application/json');
+        $app->response->write(json_encode(array($str => $str_hash)));
     });
     $app->post('/logout', function () use ($app) {
         session_unset();

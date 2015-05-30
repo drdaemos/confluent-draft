@@ -10,6 +10,17 @@ trait CrudOperations
         if (!empty($qty)) {
             $query->limit($qty);
         }
+        $items = $query->findMany();
+
+        return $items;
+    }
+
+    public static function getArray($qty = null)
+    {
+        $query = \ORM::for_table(static::DB_TABLE);
+        if (!empty($qty)) {
+            $query->limit($qty);
+        }
         $items = $query->findArray();
 
         return $items;

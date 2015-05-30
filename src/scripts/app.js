@@ -17,7 +17,7 @@ window.app = {
     collections : {},
     root : "/",
     URL : "/",
-    API : "http://confluent-draft/api", 
+    API : "/api", 
 };
 
 var Session = require('scripts/models/Session');
@@ -25,15 +25,6 @@ var Router = require('./router');
 
 // Global event aggregator
 window.app.eventAggregator = _.extend({}, Backbone.Events);
-
-// View.close() event for garbage collection
-Backbone.View.prototype.close = function() {
-    this.remove();
-    this.unbind();
-    if (this.onClose) {
-        this.onClose();
-    }
-};
 
 Backbone.emulateHTTP = true;
 
