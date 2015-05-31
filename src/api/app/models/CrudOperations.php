@@ -39,7 +39,9 @@ trait CrudOperations
 
     public static function getById($id)
     {
-        $item = \ORM::for_table(static::DB_TABLE)->findOne($id);
+        $item = static::getSingle(
+            ['id' => $id]
+        );
         return $item;
     }
 

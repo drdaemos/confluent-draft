@@ -15,6 +15,7 @@ class Users
 
     public static function clean($item)
     {
+        if (!is_array($item)) $item = $item->asArray();
         unset($item['password'], $item['auth_token']);
         return $item;
     }
@@ -54,7 +55,7 @@ class Users
             return false;
         }
     }
-    
+
     public static function getRoles(){
         $query = \ORM::for_table(static::DB_TABLE_ROLES);
         $items = $query->findArray();

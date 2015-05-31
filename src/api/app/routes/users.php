@@ -10,7 +10,7 @@ $app->group('/users', function () use ($app) {
 
     $app->get('/:id', 'authorize', function ($id) use ($app) {
         $item = \models\Users::getById($id);
-        $data = \models\Users::clean($item->asArray());
+        $data = \models\Users::clean($item);
         $app->response->headers->set('Content-Type', 'application/json');
         $app->response->write(json_encode($data));
     });   

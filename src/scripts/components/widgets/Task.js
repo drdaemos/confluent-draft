@@ -80,7 +80,7 @@ Component.Comments = React.createClass({
           <h3 className='ui dividing header'>Comments</h3>
           <div className='comment'>
             <a className='avatar'>
-              <img src='/images/avatar/small/matt.jpg' />
+              <img src='/images/avatar/small/vasya.jpg' />
             </a>
             <div className='content'>
               <a className='author'>james</a>
@@ -97,7 +97,7 @@ Component.Comments = React.createClass({
           </div>
           <div className='comment'>
             <a className='avatar'>
-              <img src='/images/avatar/small/elliot.jpg' />
+              <img src='/images/avatar/small/daemos.jpg' />
             </a>
             <div className='content'>
               <a className='author'>daemos</a>
