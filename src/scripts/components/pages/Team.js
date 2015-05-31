@@ -10,15 +10,23 @@ var _ = require('underscore');
 // Elements
 var Page = require('scripts/components/Page');
 var Team = require('scripts/components/widgets/Team');
+
+// Data
+var Users = require('scripts/collections/Users');
+var Roles = require('scripts/collections/Roles');
   
 var Component = React.createClass({
   render: function() {
+  	var collection = {
+  		users: new Users(),
+  		roles: new Roles()
+  	};
     return (
 	    <Page>
 	    	<div className='row'>
 		    	<div className='wide column'>
 		    		<div className='ui grid stackable'>
-		    			<Team />
+		    			<Team collection={collection} />
 		    		</div>
 		    	</div>
 	    	</div>

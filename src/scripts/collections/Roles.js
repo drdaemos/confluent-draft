@@ -3,14 +3,14 @@
 var Backbone = require('backbone');
 var _ = require('underscore');
 
-var User = require('scripts/models/User');
+var Role = require('scripts/models/Role');
 
-var Users = Backbone.Collection.extend({
-	model: User,
-	fetched: false,
+var Roles = Backbone.Collection.extend({
+	model: Role,
+    fetched: false,
 
 	url: function(){
-	    return window.app.API + '/users';
+	    return window.app.API + '/userroles';
 	},
 
 	initialize: function(){
@@ -21,16 +21,16 @@ var Users = Backbone.Collection.extend({
     },
 
     fetchSuccess: function (collection, response) {
-    	collection.fetched = true;
-    	collection.trigger('update');
+        collection.fetched = true;
+        collection.trigger('update');
         console.log('Collection models: ', collection.models);
     },
 
     fetchError: function (collection, response) {
-        throw new Error("Users fetch error");
+        throw new Error("Roles fetch error");
     }
 });
 
-_.bindAll(Users, _.functions(Users));
+_.bindAll(Roles, _.functions(Roles));
 
-module.exports = Users;
+module.exports = Roles;

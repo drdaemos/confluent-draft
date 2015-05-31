@@ -74,44 +74,34 @@ Component.Description = React.createClass({
 });
 
 Component.Comments = React.createClass({
-  render: function() {
+  render: function() {    
+    var daemos = {
+        name: 'DrDaemos',
+        role: 'Developer',
+        avatar: 'daemos.jpg'
+    }
+    var james = {
+        name: 'Vasya',
+        role: 'Project Manager',
+        avatar: 'vasya.jpg'
+    }
+    var msg1 = {
+        user: james,
+        text: 'Testing comment #1',
+        date: 'Yesterday at 12:40'
+    }
+    var msg2 = {
+        user: daemos,
+        text: 'Testing comment #2',
+        date: 'Today at 11:23'
+    }
     return (
         <div className='ui comments'>
           <h3 className='ui dividing header'>Comments</h3>
-          <div className='comment'>
-            <a className='avatar'>
-              <img src='/images/avatar/small/vasya.jpg' />
-            </a>
-            <div className='content'>
-              <a className='author'>james</a>
-              <div className='metadata'>
-                <span className='date'>Today at 5:42PM</span>
-              </div>
-              <div className='text'>
-                We need it very soon. The conference is due to 4th of June, we have got to be absolutely ready for this.
-              </div>
-              <div className='actions'>
-                <a className='reply'>Reply</a>
-              </div>
-            </div>
-          </div>
-          <div className='comment'>
-            <a className='avatar'>
-              <img src='/images/avatar/small/daemos.jpg' />
-            </a>
-            <div className='content'>
-              <a className='author'>daemos</a>
-              <div className='metadata'>
-                <span className='date'>Yesterday at 12:30AM</span>
-              </div>
-              <div className='text'>
-                <p>ok. i am up to the task.</p>
-              </div>
-              <div className='actions'>
-                <a className='reply'>Reply</a>
-              </div>
-            </div>    
-          </div>
+
+          <Component.Comments.Item message={msg1}/>          
+          <Component.Comments.Item message={msg2}/>          
+          
           <form className='ui reply form'>
             <div className='field'>
               <textarea></textarea>
@@ -121,6 +111,30 @@ Component.Comments = React.createClass({
             </div>
           </form>
         </div>
+    );
+  }
+});
+
+Component.Comments.Item = React.createClass({
+  render: function() {
+    return (
+      <div className='comment'>
+        <a className='avatar'>
+          <img src={'/images/avatar/small/' + this.props.message.user.avatar}/>
+        </a>
+        <div className='content'>
+          <a className='author'>{this.props.message.user.name}</a>
+          <div className='metadata'>
+            <span className='date'>{this.props.message.date}</span>
+          </div>
+          <div className='text'>
+            <p>{this.props.message.text}</p>
+          </div>
+          <div className='actions'>
+            <a className='reply'>Reply</a>
+          </div>
+        </div>    
+      </div>
     );
   }
 });

@@ -2,6 +2,8 @@
 
 var React = require('react');
 var _ = require('underscore');
+var Backbone = require('backbone');
+var backboneMixin = require('backbone-react-component');
 
 // CSS
 
@@ -11,32 +13,49 @@ var _ = require('underscore');
 var Widget = require('scripts/components/Widget');
   
 var Component = React.createClass({
-  render: function() {
-    var daemos = {
-        name: 'DrDaemos',
-        role: 'Developer',
-        avatar: 'daemos.jpg'
+    mixins: [backboneMixin],
+    getInitialState: function() {
+        return {id: _.uniqueId('task-filter-')};
+    },
+    isDataReady: function() {
+        return this.props.collection.users.fetched
+            && this.props.collection.roles.fetched;
+    },
+    componentDidMount: function() {
+        $('#' + this.state.id + ' .ui.dimmer').dimmer('show');
+    },
+    hideDimmer: function() {
+        $('#' + this.state.id + ' .ui.dimmer').dimmer('hide'); 
+    },
+    componentDidUpdate: function() {
+        if (this.isDataReady()) {
+            this.hideDimmer();
+        }
+    },
+    render: function() {
+        var users = this.state.users;
+        var roles = this.state.roles;
+        var ready = isDataReady();
+        return (
+            <Widget width={'sixteen'} title={'Team'} id={this.state.id}>
+                <div className='ui four column grid cards'>
+                    {ready ?
+                        users
+                        .filter(
+                            function (user) {
+                                return user.deleted != 1;
+                            })
+                        .map(
+                            function (user) {
+                                var role = roles[1].role;
+                                return (<Component.User user={user} key={user.id} role={role} />);
+                            }
+                        ) : ''
+                    }
+                </div>
+            </Widget>
+        );
     }
-    var alive = {
-        name: 'Michael',
-        role: 'Developer',
-        avatar: 'alive.jpg'
-    }
-    var james = {
-        name: 'Vasya',
-        role: 'Project Manager',
-        avatar: 'vasya.jpg'
-    }
-    return (
-        <Widget width={'sixteen'} title={'Team'}>
-            <div className='ui four column grid cards'>
-                <Component.User user={daemos} />
-                <Component.User user={alive} />
-                <Component.User user={james} />
-            </div>
-        </Widget>
-    );
-  }
 });
 
 Component.User = React.createClass({
@@ -45,12 +64,12 @@ Component.User = React.createClass({
         <div className="column">
           <div className='ui fluid card'>
             <a className='image'>
-              <img src={'/images/avatar/large/' + this.props.user.avatar}/>
+              <img src={'/images/avatar/large/' + this.props.user.id + '.jpg'}/>
             </a>
             <div className='content'>
               <a className='header'>{this.props.user.name}</a>
               <div className='meta'>
-                <a>{this.props.user.role}</a>
+                <a>{this.props.role}</a>
               </div>
               <div className='description'>
                 some blabla text

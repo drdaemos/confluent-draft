@@ -15,3 +15,9 @@ $app->group('/users', function () use ($app) {
         $app->response->write(json_encode($data));
     });   
 });
+
+ $app->get('/userroles', 'authorize', function () use ($app) {
+    $data = \models\Users::getRoles();
+    $app->response->headers->set('Content-Type', 'application/json');
+    $app->response->write(json_encode($data));
+});   
