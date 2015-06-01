@@ -2,13 +2,13 @@
 
 namespace models;
 
-class Tasks
+class Projects
 {
     use \models\CrudOperations;
 
-    const DB_TABLE = 'tasks';
-    const DB_TABLE_USERS = 'users_tasks';
-    const DB_TABLE_STATES = 'tasks_states';
+    const DB_TABLE = 'projects';
+    const DB_TABLE_USERS = 'users_projects';
+    const DB_TABLE_STATES = 'projects_states';
 
     public static function prepare($item)
     {
@@ -17,7 +17,7 @@ class Tasks
         } else {
             $result = $item;
         }
-        $result['assigned_id'] = static::getAssigned($item);
+        $result['managed_id'] = static::getManaged($item);
 
         return $result;
     }
@@ -30,15 +30,15 @@ class Tasks
         return $array;
     }
 
-    public static function getAssigned($task)
+    public static function getManaged($project)
     {
         $query = \ORM::for_table(static::DB_TABLE_USERS);
-        $user = $query->where(['task_id' => $task['id']])->findOne();
+        $user = $query->where(['project_id' => $project['id']])->findOne();
 
         if (!empty($user)) {
-        	return $user->id;
+            return $user->id;
         } else {
-        	return 0;
+            return 0;
         }
     }
 

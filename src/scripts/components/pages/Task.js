@@ -12,7 +12,7 @@ var Page = require('scripts/components/Page');
 var Task = require('scripts/components/widgets/Task');
   
 var Component = React.createClass({
-  render: function() {
+  render: function() {  	
     return (
 	    <Page>
 	    	<div className='row'>

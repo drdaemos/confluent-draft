@@ -1,23 +1,23 @@
 <?php
 
-$app->group('/users', function () use ($app) {
+$app->group('/projects', function () use ($app) {
     $app->get('/', 'authorize', function () use ($app) {
-        $items = \models\Users::getArray();
-        $data = \models\Users::cleanArray($items);
+        $items = \models\Projects::getArray();
+        $data = \models\Projects::prepareArray($items);
         $app->response->headers->set('Content-Type', 'application/json');
         $app->response->write(json_encode($data));
     });
 
     $app->get('/:id', 'authorize', function ($id) use ($app) {
-        $item = \models\Users::getById($id);
-        $data = \models\Users::clean($item);
+        $item = \models\Projects::getById($id);
+        $data = \models\Projects::prepare($item);
         $app->response->headers->set('Content-Type', 'application/json');
         $app->response->write(json_encode($data));
     });   
 });
 
-$app->get('/userroles', 'authorize', function () use ($app) {
-    $data = \models\Users::getRoles();
+$app->get('/projectstates', 'authorize', function () use ($app) {
+    $data = \models\Projects::getStates();
     $app->response->headers->set('Content-Type', 'application/json');
     $app->response->write(json_encode($data));
 });   

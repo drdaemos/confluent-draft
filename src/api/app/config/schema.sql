@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS projects
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	deleted INTEGER,
 	name TEXT NOT NULL, 
-	state INTEGER,
+	state_id INTEGER,
 	description TEXT,
 	client_data TEXT,
 	tag TEXT UNIQUE,
@@ -51,7 +51,8 @@ CREATE TABLE IF NOT EXISTS tasks
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	deleted INTEGER, 
 	name TEXT NOT NULL, 
-	state INTEGER,
+	project_id INTEGER,
+	state_id INTEGER,
 	description TEXT,
 	estimation TEXT,
 	progress TEXT,
@@ -66,6 +67,7 @@ CREATE TABLE IF NOT EXISTS tasks_comments
 (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	created_id INTEGER NOT NULL,
+	task_id INTEGER NOT NULL,
 	message TEXT,
 	created_date TEXT
 );

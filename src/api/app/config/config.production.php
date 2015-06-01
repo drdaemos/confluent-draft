@@ -1,6 +1,6 @@
 <?php
 
-define("DB_VERSION", "0.0.2");
+define("DB_VERSION", "0.0.5");
 define("DB_FILE", "./config/app.db");
 
 // Slim configuration
