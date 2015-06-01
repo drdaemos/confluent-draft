@@ -15,7 +15,7 @@ var Widget = require('scripts/components/Widget');
 var Component = React.createClass({
     mixins: [backboneMixin],
     getInitialState: function() {
-        return {id: _.uniqueId('task-filter-')};
+        return {id: _.uniqueId('team-')};
     },
     isDataReady: function() {
         return this.props.collection.users.fetched
@@ -34,8 +34,8 @@ var Component = React.createClass({
     },
     render: function() {
         var users = this.state.users;
-        var roles = this.state.roles;
-        var ready = isDataReady();
+        var roles = this.props.collection.roles;
+        var ready = this.isDataReady();
         return (
             <Widget width={'sixteen'} title={'Team'} id={this.state.id}>
                 <div className='ui four column grid cards'>
@@ -47,8 +47,8 @@ var Component = React.createClass({
                             })
                         .map(
                             function (user) {
-                                var role = roles[1].role;
-                                return (<Component.User user={user} key={user.id} role={role} />);
+                                user.role = roles.get(user.role_id).get('role');
+                                return (<Component.User user={user} key={user.id} />);
                             }
                         ) : ''
                     }
@@ -69,7 +69,7 @@ Component.User = React.createClass({
             <div className='content'>
               <a className='header'>{this.props.user.name}</a>
               <div className='meta'>
-                <a>{this.props.role}</a>
+                <a>{this.props.user.role}</a>
               </div>
               <div className='description'>
                 some blabla text
