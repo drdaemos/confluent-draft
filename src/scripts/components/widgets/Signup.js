@@ -61,6 +61,7 @@ var Component = React.createClass({
     if (!name || !pwd || !username) {
       return;
     }
+    var formElem = '#' + this.formName;
     window.app.session.signup({
       name: name,
       username: username,
@@ -71,7 +72,9 @@ var Component = React.createClass({
       }, 
       error: function(res){
           console.log(res);
-          $('#' + this.formName).form('add errors', res.error);
+          $(formElem).removeClass('success');
+          $(formElem).addClass('error');
+          $(formElem).form('add errors', [res.error]);
       }
     });
   },

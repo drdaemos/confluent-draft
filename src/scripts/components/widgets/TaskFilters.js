@@ -20,6 +20,7 @@ var Component = React.createClass({
   },  
   isDataReady: function() {
       return this.props.collection.users.fetched
+          && this.props.collection.projects.fetched
           && this.props.collection.states.fetched;
   },
   componentDidMount: function() {  
@@ -41,7 +42,21 @@ var Component = React.createClass({
   render: function() {    
     var users = this.state.users;
     var states = this.state.states;
+    var projects = this.state.projects;
     var ready = this.isDataReady();
+
+    var projects = {
+      options: projects
+              .filter(
+                function (projects) {
+                  return projects.deleted != 1;
+                }),
+      option: 'tag',
+      initial: {
+        value: "0",
+        text: "Any project"
+      }
+    };
 
     var assigned = {
       options: users
@@ -51,7 +66,7 @@ var Component = React.createClass({
                 }),
       option: 'name',
       initial: {
-        value: "",
+        value: "0",
         text: "Anyone"
       }
     };
@@ -60,7 +75,7 @@ var Component = React.createClass({
       options: states,
       option: 'state',
       initial: {
-        value: "",
+        value: "0",
         text: "Any state"
       }
     };
@@ -70,11 +85,9 @@ var Component = React.createClass({
 
               <div className='field'>
                 <label>Project</label>
-                <select className='ui search dropdown'>
-                  <option value="">All projects</option>
-                  <option value="1">DRAFT</option>
-                  <option value="2">TEST</option>
-                </select>
+                {ready 
+                 ? <Select {...projects} />
+                 : ''}
               </div>
 
               <div className='field'>

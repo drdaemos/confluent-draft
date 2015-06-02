@@ -15,7 +15,7 @@ var Widget = require('scripts/components/Widget');
 var Component = React.createClass({
     mixins: [backboneMixin],
     getInitialState: function() {
-        return {id: _.uniqueId('task-filter-')};
+        return {id: _.uniqueId('tasks-')};
     },  
     isDataReady: function() {
         return this.props.collection.users.fetched
@@ -26,7 +26,7 @@ var Component = React.createClass({
     },
     componentDidMount: function() {  
         if (!this.isDataReady()) {
-          $('#' + this.state.id + ' .ui.dimmer').dimmer('show'); 
+            this.showDimmer();
         }
     },
     componentDidUpdate: function() { 
@@ -34,6 +34,9 @@ var Component = React.createClass({
             this.hideDimmer();
         }
     },  
+    showDimmer: function() {
+        $('#' + this.state.id + ' .ui.dimmer').dimmer('show'); 
+    },
     hideDimmer: function() {
         $('#' + this.state.id + ' .ui.dimmer').dimmer('hide'); 
     },
@@ -56,15 +59,9 @@ var Component = React.createClass({
                                 })
                             .map(
                                 function (task) {
-                                    task.assignee = !_.isUndefined(users.get(task.assigned_id))
-                                                    ? users.get(task.assigned_id).get('name')
-                                                    : 'Not assigned';
-                                    task.state = !_.isUndefined(states.get(task.state_id))
-                                                 ? states.get(task.state_id).get('state')
-                                                 : 'Undefined';
-                                    task.tag = !_.isUndefined(projects.get(task.project_id))
-                                               ? projects.get(task.project_id).get('tag') + '-' + task.id
-                                               : 'WTF?';
+                                    task.assignee = users.tryGet(task.assigned_id, 'Not assigned', 'name');
+                                    task.state = states.tryGet(task.state_id, 'Undefined', 'state');
+                                    task.tag = projects.tryGet(task.project_id, 'WTF?', 'tag') + '-' + task.id;
                                     task.comments = comments.where({task_id: task.id}).length;
                                     return (<Component.Row task={task} key={task.id} />);
                                 }

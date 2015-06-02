@@ -7,8 +7,7 @@ var ProjectState = require('scripts/models/ProjectState');
 
 var ProjectStates = Backbone.Collection.extend({
 	model: ProjectState,
-	fetched: false,
-
+    
 	url: function(){
 	    return window.app.API + '/projectstates';
 	},
@@ -19,16 +18,6 @@ var ProjectStates = Backbone.Collection.extend({
             error: this.fetchError
         });
     },
-
-    fetchSuccess: function (collection, response) {
-    	collection.fetched = true;
-    	collection.trigger('update');
-        console.log('Collection models: ', collection.models);
-    },
-
-    fetchError: function (collection, response) {
-        throw new Error("ProjectStates fetch error");
-    }
 });
 
 _.bindAll(ProjectStates, _.functions(ProjectStates));

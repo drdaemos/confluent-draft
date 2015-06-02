@@ -6,6 +6,7 @@ var _ = require('underscore');
 global.$ = require('jquery');
 global.jQuery = global.$;
 
+require('scripts/libs/backbone-fetching-collection');
 require('semantic-ui');
 
 // Export React so the devtools can find it

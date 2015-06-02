@@ -52,6 +52,7 @@ var Component = React.createClass({
     if (!name || !pwd) {
       return;
     }
+    var formElem = '#' + this.formName;
     window.app.session.login({
       username: name,
       password: pwd
@@ -61,7 +62,9 @@ var Component = React.createClass({
       }, 
       error: function(res){
           console.log(res);
-          $('#' + this.formName).form('add errors', res.error);
+          $(formElem).removeClass('success');
+          $(formElem).addClass('error');
+          $(formElem).form('add errors', [res.error]);
       }
     });
   },

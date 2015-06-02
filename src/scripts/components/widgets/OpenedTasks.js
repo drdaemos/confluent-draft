@@ -2,6 +2,8 @@
 
 var React = require('react');
 var _ = require('underscore');
+var Backbone = require('backbone');
+var backboneMixin = require('backbone-react-component');
 
 // CSS
 
@@ -10,36 +12,73 @@ var _ = require('underscore');
 // Elements
 var Widget = require('scripts/components/Widget');
   
-var Component = React.createClass({
-  render: function() {
+var Component = React.createClass({  
+  mixins: [backboneMixin],
+  getInitialState: function() {
+      return {id: _.uniqueId('opened-')};
+  },  
+  isDataReady: function() {
+      return this.props.collection.users.fetched
+          && this.props.collection.tasks.fetched
+          && this.props.collection.projects.fetched;
+  },
+  componentDidMount: function() {  
+      if (!this.isDataReady()) {
+          this.showDimmer();
+      }
+  },
+  componentDidUpdate: function() { 
+      if (this.isDataReady()) {   
+          this.hideDimmer();
+      }
+  },  
+  showDimmer: function() {
+      $('#' + this.state.id + ' .ui.dimmer').dimmer('show'); 
+  },
+  hideDimmer: function() {
+      $('#' + this.state.id + ' .ui.dimmer').dimmer('hide'); 
+  },
+  render: function() {    
+    var tasks = this.state.tasks;
+    var users = this.props.collection.users;
+    var projects = this.props.collection.projects;
+    var ready = this.isDataReady();
     return (
 	    <Widget width={'ten'} title={'Opened Tasks'}>
 		    <div className='ui relaxed list'>
-          <div className='item'>
-            <i className='tag icon'></i>
-            <div className='content'>
-              <a className='header'> DRAFT-1 Prepare UML Diagrams for a project </a>
-              <div className='description'> Use Case, Classes, ER, Deployment and DFD are needed </div>
-            </div>
-          </div>
-          <div className='item'>
-            <i className='tag icon'></i>
-            <div className='content'>
-              <a className='header'> DRAFT-2 Describe program business model and processes </a>
-              <div className='description'> A few pages should be enough. </div>
-            </div>
-          </div>
-          <div className='item'>
-            <i className='tag icon'></i>
-            <div className='content'>
-              <a className='header'> DRAFT-3 Configure build system </a>
-              <div className='description'>I recommend using grunt, look for some examples at blabla.com </div>
-            </div>
-          </div>
+            {ready ?
+                tasks
+                .filter(
+                    function (task) {
+                        return task.deleted != 1 
+                            && task.state_id == 1 
+                            && task.assigned_id == window.app.session.user.get('id');
+                    })
+                .map(
+                    function (task) {
+                        task.tag = projects.tryGet(task.project_id, 'WTF?', 'tag') + '-' + task.id;
+                        return (<Component.Item task={task} key={task.id} />);
+                    }
+                ) : ''
+            }
         </div>
 	    </Widget>
     );
   }
+});
+
+Component.Item = React.createClass({
+    render: function() {
+        return (
+          <div className='item'>
+            <i className='tag icon'></i>
+            <div className='content'>
+              <a className='header'> {this.props.task.tag + ' ' + this.props.task.name}  </a>
+              <div className='description'> {this.props.task.description} </div>
+            </div>
+          </div>
+        );
+    }
 });
 
 module.exports = Component;
