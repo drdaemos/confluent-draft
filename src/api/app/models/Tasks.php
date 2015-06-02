@@ -36,7 +36,7 @@ class Tasks
         $user = $query->where(['task_id' => $task['id']])->findOne();
 
         if (!empty($user)) {
-        	return $user->id;
+        	return $user->user_id;
         } else {
         	return 0;
         }

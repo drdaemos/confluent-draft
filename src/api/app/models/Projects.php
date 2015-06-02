@@ -36,7 +36,7 @@ class Projects
         $user = $query->where(['project_id' => $project['id']])->findOne();
 
         if (!empty($user)) {
-            return $user->id;
+            return $user->user_id;
         } else {
             return 0;
         }

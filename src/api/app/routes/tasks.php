@@ -3,7 +3,9 @@
 $app->group('/tasks', function () use ($app) {
     $app->get('/', 'authorize', function () use ($app) {
         $items = \models\Tasks::getArray();
+        $app->log->debug($items);
         $data = \models\Tasks::prepareArray($items);
+        $app->log->debug($data);
         $app->response->headers->set('Content-Type', 'application/json');
         $app->response->write(json_encode($data));
     });

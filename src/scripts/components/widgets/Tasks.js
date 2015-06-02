@@ -56,10 +56,15 @@ var Component = React.createClass({
                                 })
                             .map(
                                 function (task) {
-                                    console.log(users, states,projects);
-                                    task.assignee = users.get(task.assigned_id).get('name');
-                                    task.state = states.get(task.state_id).get('state');
-                                    task.tag = projects.get(task.project_id).get('tag') + '-' + task.id;
+                                    task.assignee = !_.isUndefined(users.get(task.assigned_id))
+                                                    ? users.get(task.assigned_id).get('name')
+                                                    : 'Not assigned';
+                                    task.state = !_.isUndefined(states.get(task.state_id))
+                                                 ? states.get(task.state_id).get('state')
+                                                 : 'Undefined';
+                                    task.tag = !_.isUndefined(projects.get(task.project_id))
+                                               ? projects.get(task.project_id).get('tag') + '-' + task.id
+                                               : 'WTF?';
                                     task.comments = comments.where({task_id: task.id}).length;
                                     return (<Component.Row task={task} key={task.id} />);
                                 }
