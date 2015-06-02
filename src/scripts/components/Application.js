@@ -17,7 +17,7 @@ var Application = React.createClass({
 	    return (
 		    <div className='ui grid'>
 	    		<Header />
-	    		<Page />
+	    		<Page {...this.props} />
 		    </div>
 	    );
 	}

@@ -48,7 +48,7 @@ var Component = React.createClass({
         var projects = this.props.collection.projects;
         var ready = this.isDataReady();
         return (
-            <Widget width={'twelve'} title={'Tasks'}>
+            <Widget width={'twelve'} title={'Tasks'} id={this.state.id}>
                 <table className='ui striped table'>
                     <tbody>
                         {ready ?

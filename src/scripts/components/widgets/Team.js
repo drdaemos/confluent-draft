@@ -63,13 +63,13 @@ Component.User = React.createClass({
     return (
         <div className="column">
           <div className='ui fluid card'>
-            <a className='image'>
+            <a href={'#profile/' + this.props.user.username} className='image'>
               <img src={'/images/avatar/large/' + this.props.user.id + '.jpg'}/>
             </a>
             <div className='content'>
               <a className='header'>{this.props.user.name}</a>
               <div className='meta'>
-                <a>{this.props.user.role}</a>
+                <a href={'#profile/' + this.props.user.username}>{this.props.user.role}</a>
               </div>
               <div className='description'>
                 some blabla text

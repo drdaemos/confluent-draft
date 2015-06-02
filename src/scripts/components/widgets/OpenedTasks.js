@@ -44,21 +44,26 @@ var Component = React.createClass({
     var projects = this.props.collection.projects;
     var ready = this.isDataReady();
     return (
-	    <Widget width={'ten'} title={'Opened Tasks'}>
+	    <Widget width={'ten'} title={'Opened Tasks'} id={this.state.id}>
 		    <div className='ui relaxed list'>
             {ready ?
-                tasks
-                .filter(
-                    function (task) {
-                        return task.deleted != 1 
-                            && task.state_id == 1 
-                            && task.assigned_id == window.app.session.user.get('id');
-                    })
-                .map(
-                    function (task) {
-                        task.tag = projects.tryGet(task.project_id, 'WTF?', 'tag') + '-' + task.id;
-                        return (<Component.Item task={task} key={task.id} />);
-                    }
+                (_.isEmpty(
+                    tasks
+                    .filter(
+                        function (task) {
+                            return task.deleted != 1 
+                                && task.state_id == 1 
+                                && task.assigned_id == window.app.session.user.get('id');
+                        })
+                    .map(
+                        function (task) {
+                            task.tag = projects.tryGet(task.project_id, 'WTF?', 'tag') + '-' + task.id;
+                            return (<Component.Item task={task} key={task.id} />);
+                        }
+                    )
+                  ) ? 
+                  <p> No such tasks for you </p>
+                  : ''
                 ) : ''
             }
         </div>

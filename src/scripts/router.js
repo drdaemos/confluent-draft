@@ -11,7 +11,8 @@ var Router = Backbone.Router.extend({
 
     show: function(options){
         var props = {
-            page: options.page
+            page: options.page,
+            query: options.query
         };
 
         if (typeof options !== 'undefined' && options.requiresAuth){        
@@ -19,7 +20,7 @@ var Router = Backbone.Router.extend({
             window.app.session.checkAuth({
                 success: function(res){
                     // If auth successful, render inside the page wrapper
-                    React.render(<Application {...props} />, document.getElementById(self.el));
+                    React.render(<Application {...props} key={props.page}/>, document.getElementById(self.el));
                 }, error: function(res){
                     self.navigate("login", { trigger: true });
                 }
@@ -40,6 +41,7 @@ var Router = Backbone.Router.extend({
         "task": "task",
         "projects": "projects",
         "team": "team",
+        "profile(/:user)": "profile",
         "*path": "notFound"
     },
 
@@ -75,6 +77,16 @@ var Router = Backbone.Router.extend({
         this.show({
             page: 'Team',
             requiresAuth: true
+        });
+    },
+
+    profile: function (user) {
+        this.show({
+            page: 'Profile',
+            requiresAuth: true,
+            query: {
+                user: user
+            }
         });
     },
 
