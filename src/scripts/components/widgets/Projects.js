@@ -14,7 +14,7 @@ var backboneMixin = require('backbone-react-component');
 var Widget = require('scripts/components/Widget');
   
 var Component = React.createClass({
-    mixins: [backboneMixin],
+    mixins: [backboneMixin],    
     getInitialState: function() {
         return {id: _.uniqueId('projects-')};
     },  
@@ -24,7 +24,11 @@ var Component = React.createClass({
             && this.props.collection.states.fetched
             && this.props.collection.projects.fetched;
     },
-    componentDidMount: function() {  
+    onFiltersChanged: function( msg, data ) {
+        this.setState({filters: data});
+    },
+    componentDidMount: function() { 
+        this.filterToken = Events.subscribe('project-filter.changed', this.onFiltersChanged); 
         if (!this.isDataReady()) {
             this.showDimmer();
         }
@@ -45,6 +49,7 @@ var Component = React.createClass({
         var states = this.props.collection.states;
         var users = this.props.collection.users;
         var projects = this.state.projects;
+        var filters = this.state.filters;
         var ready = this.isDataReady();
         return (
             <Widget width={'twelve'} title={'Projects'} id={this.state.id}>
@@ -54,7 +59,12 @@ var Component = React.createClass({
                             projects
                             .filter(
                                 function (project) {
-                                    return project.deleted != 1;
+                                    var valid = project.deleted != 1;
+                                    if (!_.isUndefined(filters)) {
+                                        if (filters.managed != 0) valid = (valid && project.managed_id == filters.managed);
+                                        if (filters.state != 0) valid = (valid && project.state_id == filters.state);
+                                    }
+                                    return valid;
                                 })
                             .map(
                                 function (project) {

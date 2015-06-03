@@ -54,11 +54,15 @@ var Component = React.createClass({
       if (!_.isUndefined(task)) {
         var state = this.props.collection.states.tryGet(task.get('state_id'), 'Undefined');
         var assignee = this.props.collection.users.tryGet(task.get('assigned_id'), 'Not assigned');
+        var comments = this.props.collection.comments.where({task_id: task.get('id')});
+        var users = this.props.collection.users;
         return {
           task: task,
           project: project,
           state: state,
-          assignee: assignee
+          assignee: assignee,
+          comments: comments,
+          users: users
         };
       } else return;
     } else return;
@@ -148,15 +152,9 @@ Component.Description = React.createClass({
     return (
       <div className='ten wide column'>
         <div className='ui basic segment'>
-          <p> Use Case, Classes, ER, Deployment and DFD are needed </p>
-          <p>
-            Tommy ruff, beaked sandfish common carp slimy sculpin manefish angler blue whiting, beardfish, spotted dogfish. Zander striped burrfish smelt barred danio, mooneye, glowlight danio Shingle Fish. Danio sawtooth eel monkfish featherfin knifefish New World rivuline Ragfish, silver hake. Skipping goby ronquil marblefish threespine stickleback slipmouth tadpole cod amur pike.
-          </p>
-          <p>
-            Kaluga shiner Billfish pipefish nurseryfish Pacific cod, poolfish red velvetfish? Queen triggerfish ling cod. Ratfish Manta Ray dory sailfin silverside zebra trout?
-          </p>
+          {this.props.data.task.get('description')}
         </div>
-        <Component.Comments />
+        <Component.Comments {...this.props} />
       </div>
     );
   }
@@ -164,32 +162,23 @@ Component.Description = React.createClass({
 
 Component.Comments = React.createClass({
   render: function() {    
-    var daemos = {
-        name: 'DrDaemos',
-        role: 'Developer',
-        avatar: 'daemos.jpg'
-    }
-    var james = {
-        name: 'Vasya',
-        role: 'Project Manager',
-        avatar: 'vasya.jpg'
-    }
-    var msg1 = {
-        user: james,
-        text: 'Testing comment #1',
-        date: 'Yesterday at 12:40'
-    }
-    var msg2 = {
-        user: daemos,
-        text: 'Testing comment #2',
-        date: 'Today at 11:23'
-    }
+    var users = this.props.data.users;
     return (
         <div className='ui comments'>
           <h3 className='ui dividing header'>Comments</h3>
-
-          <Component.Comments.Item message={msg1}/>          
-          <Component.Comments.Item message={msg2}/>          
+          {
+            this.props.data.comments
+            .filter(
+                function (comment) {
+                    return true;
+                })
+            .map(
+                function (comment) {
+                    comment.user = users.tryGet(comment.get('created_id'), 'WTF?');
+                    return (<Component.Comments.Item message={comment} key={comment.get('id')} />);
+                }
+            )
+          }     
           
           <form className='ui reply form'>
             <div className='field'>
@@ -209,15 +198,15 @@ Component.Comments.Item = React.createClass({
     return (
       <div className='comment'>
         <a className='avatar'>
-          <img src={'/images/avatar/small/' + this.props.message.user.avatar}/>
+          <img src={this.props.message.user.get('avatar_small')}/>
         </a>
         <div className='content'>
-          <a className='author'>{this.props.message.user.name}</a>
+          <a className='author'>{this.props.message.user.get('name')}</a>
           <div className='metadata'>
-            <span className='date'>{this.props.message.date}</span>
+            <span className='date'>{this.props.message.get('date')}</span>
           </div>
           <div className='text'>
-            <p>{this.props.message.text}</p>
+            <p>{this.props.message.get('message')}</p>
           </div>
           <div className='actions'>
             <a className='reply'>Reply</a>

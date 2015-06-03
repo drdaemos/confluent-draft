@@ -2,6 +2,7 @@
 
 var React = require('react');
 var _ = require('underscore');
+var Events = require('pubsub-js');
 var Backbone = require('backbone');
 var backboneMixin = require('backbone-react-component');
 
@@ -15,6 +16,11 @@ var Select = require('scripts/components/elements/Select');
   
 var Component = React.createClass({
   mixins: [backboneMixin],
+  filters: {
+    project: 0,
+    assigned: 0,
+    state: 0,
+  },
   getInitialState: function() {
     return {id: _.uniqueId('task-filter-')};
   },  
@@ -23,19 +29,25 @@ var Component = React.createClass({
           && this.props.collection.projects.fetched
           && this.props.collection.states.fetched;
   },
+  handleFilterChange: function(filter, value) {
+    if (!_.isUndefined(value)) {
+      this.filters[filter] = value;
+    }
+    Events.publish('task-filter.changed', this.filters);
+  },
   componentDidMount: function() {  
     if (!this.isDataReady()) {
-      $('#' + this.state.id + ' .ui.dimmer').dimmer('show'); 
-    } else {      
-      $('#' + this.state.id + ' .search.dropdown').dropdown(); 
+        this.showDimmer();
     }
   },
   componentDidUpdate: function() { 
     if (this.isDataReady()) {
-        $('#' + this.state.id + ' .search.dropdown').dropdown();   
         this.hideDimmer();
     }
   },  
+  showDimmer: function() {
+      $('#' + this.state.id + ' .ui.dimmer').dimmer('show'); 
+  },   
   hideDimmer: function() {
       $('#' + this.state.id + ' .ui.dimmer').dimmer('hide'); 
   },
@@ -46,6 +58,7 @@ var Component = React.createClass({
     var ready = this.isDataReady();
 
     var projects = {
+      onChange: _.partial(this.handleFilterChange, 'project'),
       options: projects
               .filter(
                 function (projects) {
@@ -59,6 +72,7 @@ var Component = React.createClass({
     };
 
     var assigned = {
+      onChange: _.partial(this.handleFilterChange, 'assigned'),
       options: users
               .filter(
                 function (user) {
@@ -72,6 +86,7 @@ var Component = React.createClass({
     };
 
     var state = {
+      onChange: _.partial(this.handleFilterChange, 'state'),
       options: states,
       option: 'state',
       initial: {

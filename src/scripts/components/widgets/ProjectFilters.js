@@ -30,8 +30,10 @@ var Component = React.createClass({
           && this.props.collection.states.fetched;
   },
   handleFilterChange: function(filter, value) {
-    this.filters[filter] = value;
-    console.log(this.filters);
+    if (!_.isUndefined(value)) {
+      this.filters[filter] = value;
+    }
+    Events.publish('project-filter.changed', this.filters);
   },
   componentDidMount: function() { 
     if (!this.isDataReady()) {
