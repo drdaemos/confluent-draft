@@ -2,6 +2,7 @@
 
 var React = require('react');
 var _ = require('underscore');
+var Events = require('pubsub-js');
 var Backbone = require('backbone');
 var backboneMixin = require('backbone-react-component');
 

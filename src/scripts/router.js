@@ -38,7 +38,7 @@ var Router = Backbone.Router.extend({
         "signup": "signup",
         "dashboard": "start",
         "tasks": "tasks",
-        "task": "task",
+        "task/:tag": "task",
         "projects": "projects",
         "team": "team",
         "profile(/:user)": "profile",
@@ -59,10 +59,13 @@ var Router = Backbone.Router.extend({
         });
     },
 
-    task: function () {
+    task: function (tag) {
         this.show({
             page: 'Task',
-            requiresAuth: true
+            requiresAuth: true,
+            query: {
+                tag: tag
+            }
         });
     },
 

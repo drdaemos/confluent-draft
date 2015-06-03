@@ -14,10 +14,16 @@ class Users
     // end of overrides
 
     public static function clean($item)
-    {
-        if (!is_array($item)) $item = $item->asArray();
-        unset($item['password'], $item['auth_token']);
-        return $item;
+    {        
+        if (!is_array($item)) {
+            $result = $item->asArray();
+        } else {
+            $result = $item;
+        }
+        $result['avatar_large'] = \models\Files::getAvatar($result['id'], 'large');
+        $result['avatar_small'] = \models\Files::getAvatar($result['id'], 'small');
+        unset($result['password'], $result['auth_token']);
+        return $result ;
     }
 
     public static function cleanArray($array)

@@ -1,6 +1,6 @@
 <?php
 namespace models;
-class FilesModel{
+class Files{
 	static function UploadImage($uploaddir = '/uploads/images/'){
 		$allowed = array('jpg','png','gif', 'jpeg');
 		$filename = $_FILES['upload']['name'];
@@ -34,6 +34,14 @@ class FilesModel{
 	}
 	static function Watermark($path){
 		\lib\Utils::AddWatermarkIM($path);
+	}
+
+	static function getAvatar($user_id, $type = 'large'){
+		$path = '/images/avatar/' . $type . '/';
+		$avatar = glob($_SERVER['DOCUMENT_ROOT'] . $path . $user_id . '.*');
+		if(!empty($avatar)){
+            return $path . basename($avatar[0]);
+        } else return '/images/no-avatar.png';
 	}
 }
 

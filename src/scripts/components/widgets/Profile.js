@@ -28,12 +28,16 @@ var Component = React.createClass({
             this.showDimmer();
         } 
     },
-    componentDidUpdate: function() { 
+    componentWillUpdate: function() {
         if (this.isDataReady()) {  
-            var username = !_.isUndefined(this.props.query.user) ? this.props.query.user : window.app.session.user.get('username');
+            var username = !_.isNull(this.props.query.user) ? this.props.query.user : window.app.session.user.get('username');
             if (_.isUndefined(this.props.collection.users.findWhere({username: username}))) {
                 window.app.router.notFound();
             }
+        }
+    },
+    componentDidUpdate: function() { 
+        if (this.isDataReady()) {  
             this.hideDimmer();
         }
     },  
@@ -48,7 +52,7 @@ var Component = React.createClass({
         var users = this.state.users;
         var ready = this.isDataReady();
         if (ready) {
-            var username = !_.isUndefined(this.props.query.user) ? this.props.query.user : window.app.session.user.get('username');
+            var username = !_.isNull(this.props.query.user) ? this.props.query.user : window.app.session.user.get('username');
             var user = _.findWhere(users, {username: username});
             if (!_.isUndefined(user)) {
                 user.role = this.props.collection.roles.tryGet(user.role_id, 'Undefined', 'role');
@@ -83,7 +87,7 @@ Component.Profile.Avatar = React.createClass({
         return (
             <div className='six wide column'>
                 <img className='ui rounded centered image' 
-                     src={'/images/avatar/large/' + this.props.user.id + '.jpg'} />
+                     src={this.props.user.avatar_large} />
             </div>
         );
     }

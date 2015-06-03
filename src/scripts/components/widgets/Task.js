@@ -2,6 +2,8 @@
 
 var React = require('react');
 var _ = require('underscore');
+var Backbone = require('backbone');
+var backboneMixin = require('backbone-react-component');
 
 // CSS
 
@@ -11,14 +13,89 @@ var _ = require('underscore');
 var Widget = require('scripts/components/Widget');
   
 var Component = React.createClass({
+  mixins: [backboneMixin],
+  getInitialState: function() {
+      return {id: _.uniqueId('tasks-')};
+  },  
+  isDataReady: function() {
+      return this.props.collection.users.fetched
+          && this.props.collection.tasks.fetched
+          && this.props.collection.states.fetched
+          && this.props.collection.projects.fetched
+          && this.props.collection.comments.fetched;
+  },
+  componentDidMount: function() {  
+      if (!this.isDataReady()) {
+          this.showDimmer();
+      }
+  },
+  componentWillUpdate: function() {    
+      if (this.isDataReady()) {     
+        var data = this.getDataFromQuery();
+        console.log(data);
+        if(_.isUndefined(data)){          
+          window.app.router.notFound();
+        }
+      }
+  },
+  componentDidUpdate: function() { 
+      if (this.isDataReady()) {     
+        this.hideDimmer();
+      }
+  },
+  getDataFromQuery: function() {
+    var query = this.splitTag(this.props.query.tag);
+    var project = this.props.collection.projects.findWhere({tag: query.project});
+
+    if (!_.isUndefined(project)) {
+        var task = this.props.collection.tasks.findWhere({
+          id: query.task, project_id: project.get('id') 
+        });
+      if (!_.isUndefined(task)) {
+        var state = this.props.collection.states.tryGet(task.get('state_id'), 'Undefined');
+        var assignee = this.props.collection.users.tryGet(task.get('assigned_id'), 'Not assigned');
+        return {
+          task: task,
+          project: project,
+          state: state,
+          assignee: assignee
+        };
+      } else return;
+    } else return;
+  },
+  splitTag: function(tag) {
+    return {
+      project: tag.split('-',2)[0],
+      task: tag.split('-',2)[1],      
+    };
+  },
+  showDimmer: function() {
+      $('#' + this.state.id + ' .ui.dimmer').dimmer('show'); 
+  },
+  hideDimmer: function() {
+      $('#' + this.state.id + ' .ui.dimmer').dimmer('hide'); 
+  },
   render: function() {
+    var title = 'Task';    
+    var ready = this.isDataReady();
+    var data = this.getDataFromQuery();
+    if (ready && !_.isUndefined(data)) {
+      var title = data.project.get('tag') + '-' + data.task.get('id') + ' ' + data.task.get('name');
+    }
     return (
-	    <Widget width={'sixteen'} title={'DRAFT-1 Prepare UML Diagrams for a project'}>
+	    <Widget width={'sixteen'} title={title}>
         <div className='ui grid'>
-          <div className='row'>
-            <Component.Description />
-            <Component.Properties />
-          </div>
+          {ready 
+            ?
+            <div className='row'>
+              <Component.Description data={data} />
+              <Component.Properties data={data} />              
+            </div> 
+            :
+            <div className='row'>
+              <p>Please wait while data is being loaded </p>
+            </div> 
+          }
         </div>
 	    </Widget>
     );
@@ -27,7 +104,9 @@ var Component = React.createClass({
 
 Component.Properties = React.createClass({
   render: function() {
-    var date = new Date().toDateString();
+    var date = new Date(this.props.data.task.get('started_date')).toDateString();
+    var estimation = this.props.data.task.get('estimation') + ' minutes'; 
+    var progress = this.props.data.task.get('progress') + ' minutes'; 
     return (
       <div className='six wide column'>
         <h3 className='ui dividing header'>Task info</h3>
@@ -35,17 +114,27 @@ Component.Properties = React.createClass({
           <tbody>
             <tr>
               <td>State</td>
-              <td>In progress</td>
+              <td>{this.props.data.state.get('state')}</td>
             </tr>
 
             <tr>
               <td>Assigned to</td>
-              <td>daemos</td>
+              <td>{this.props.data.assignee.get('name')}</td>
             </tr>
 
             <tr>
-              <td>Created</td>
+              <td>Started</td>
               <td>{date}</td>
+            </tr>
+
+            <tr>
+              <td>Estimation</td>
+              <td>{estimation}</td>
+            </tr>
+
+            <tr>
+              <td>Progress</td>
+              <td>{progress}</td>
             </tr>
           </tbody>
         </table>

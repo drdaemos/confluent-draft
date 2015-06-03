@@ -76,6 +76,7 @@ $app->group('/auth', function () use ($app) {
             $user->deleted = false;
             $user->password = \models\Users::getHash($password);
             $user->auth_token = \models\Users::generateToken();
+            $user->role_id = 1;
             $user->save();
 
             $_SESSION['user_id'] = $user->id;

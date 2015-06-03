@@ -64,7 +64,7 @@ Component.User = React.createClass({
         <div className="column">
           <div className='ui fluid card'>
             <a href={'#profile/' + this.props.user.username} className='image'>
-              <img src={'/images/avatar/large/' + this.props.user.id + '.jpg'}/>
+              <img src={this.props.user.avatar_large}/>
             </a>
             <div className='content'>
               <a className='header'>{this.props.user.name}</a>

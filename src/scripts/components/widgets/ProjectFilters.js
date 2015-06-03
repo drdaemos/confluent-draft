@@ -2,6 +2,7 @@
 
 var React = require('react');
 var _ = require('underscore');
+var Events = require('pubsub-js');
 var Backbone = require('backbone');
 var backboneMixin = require('backbone-react-component');
 
@@ -15,23 +16,30 @@ var Select = require('scripts/components/elements/Select');
   
 var Component = React.createClass({
   mixins: [backboneMixin],
+  filters: {
+    managed: 0,
+    state: 0
+  },
   getInitialState: function() {
-    return {id: _.uniqueId('project-filter-')};
+    return {
+      id: _.uniqueId('project-filter-'),
+    };
   },  
   isDataReady: function() {
       return this.props.collection.users.fetched
           && this.props.collection.states.fetched;
   },
+  handleFilterChange: function(filter, value) {
+    this.filters[filter] = value;
+    console.log(this.filters);
+  },
   componentDidMount: function() { 
     if (!this.isDataReady()) {
       this.showDimmer();
-    } else {      
-      $('#' + this.state.id + ' .search.dropdown').dropdown(); 
     }
   },
   componentDidUpdate: function() {
     if (this.isDataReady()) {
-        $('#' + this.state.id + ' .search.dropdown').dropdown();   
         this.hideDimmer();
     }
   },  
@@ -47,6 +55,7 @@ var Component = React.createClass({
     var ready = this.isDataReady();
     //selects
     var managed = {
+      onChange: _.partial(this.handleFilterChange, 'managed'),
       options: users
               .filter(
                 function (user) {
@@ -60,6 +69,7 @@ var Component = React.createClass({
     };
 
     var state = {
+      onChange: _.partial(this.handleFilterChange, 'state'),
       options: states,
       option: 'state',
       initial: {

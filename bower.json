@@ -24,6 +24,7 @@
     "backbone-xhr-events": "~1.0.1",
     "react-mixin-manager": "~1.0.1",
     "backbone-react-component": "~0.8.1",
-    "react-backbone": "~1.0.2"
+    "react-backbone": "~1.0.2",
+    "pubsub-js": "~1.5.2"
   }
 }
