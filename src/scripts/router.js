@@ -40,6 +40,7 @@ var Router = Backbone.Router.extend({
         "tasks": "tasks",
         "task/:tag": "task",
         "projects": "projects",
+        "newproject": "newproject",
         "team": "team",
         "profile(/:user)": "profile",
         "*path": "notFound"
@@ -72,6 +73,13 @@ var Router = Backbone.Router.extend({
     projects: function () {
         this.show({
             page: 'Projects',
+            requiresAuth: true
+        });
+    },
+
+    newproject: function () {
+        this.show({
+            page: 'NewProject',
             requiresAuth: true
         });
     },

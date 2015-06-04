@@ -32,6 +32,21 @@ $app->group('/comments', function () use ($app) {
         $app->response->headers->set('Content-Type', 'application/json');
         $app->response->write(json_encode($data));
     });
+
+    $app->put('/', 'authorize', function () use ($app) {
+        $json = $app->request->getBody();
+        $data = json_decode($json, true);
+
+        $comment = \models\TaskComments::create();
+        $comment->created_id = $data['created_id'];
+        $comment->created_date = $data['created_date'];
+        $comment->message = $data['message'];
+        $comment->task_id = $data['task_id'];
+        $comment->save();    
+        
+        $app->response->headers->set('Content-Type', 'application/json');
+        $app->response->write(json_encode(array('success' => 'new project was created')));
+    });
 });
 
 $app->get('/taskstates', 'authorize', function () use ($app) {

@@ -42,6 +42,14 @@ class Projects
         }
     }
 
+    public static function setManaged($project, $manager) 
+    {
+        $record = \ORM::for_table(static::DB_TABLE_USERS)->create();
+        $record->project_id = $project;
+        $record->user_id = $manager;
+        $record->save();
+    }
+
     public static function getStates(){
         $query = \ORM::for_table(static::DB_TABLE_STATES);
         $items = $query->findArray();

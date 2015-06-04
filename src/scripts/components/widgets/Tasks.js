@@ -92,7 +92,7 @@ Component.Row = React.createClass({
             <tr>
                 <td>
                     <div className='content'>
-                      <a className='header' href="#task"> {this.props.task.tag + ' ' + this.props.task.name} </a>
+                      <a className='header' href={'#task/' + this.props.task.tag}> {this.props.task.tag + ' ' + this.props.task.name} </a>
                       <div className='description'> {this.props.task.description} </div>
                     </div>    
                 </td>                

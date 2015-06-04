@@ -53,6 +53,7 @@ var Component = React.createClass({
         var ready = this.isDataReady();
         return (
             <Widget width={'twelve'} title={'Projects'} id={this.state.id}>
+                <Component.Toolbar />
                 <table className='ui striped table'>
                     <tbody>
                         {ready ?
@@ -78,6 +79,26 @@ var Component = React.createClass({
                     </tbody>
                 </table>
             </Widget>
+        );
+    }
+});
+
+Component.Toolbar = React.createClass({
+    render: function() {
+        return (
+            <div className='ui secondary pointing menu'>
+              <a className='item' href='#newproject'>
+                <i className='add circle icon'></i> New project
+              </a>
+              <div className='right menu'>
+                <div className='item'>
+                  <div className='ui transparent icon input'>
+                    <input type='text' placeholder='Search...' />
+                    <i className='search link icon'></i>
+                  </div>
+                </div>
+              </div>
+            </div>
         );
     }
 });

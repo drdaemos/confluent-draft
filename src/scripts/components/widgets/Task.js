@@ -54,7 +54,7 @@ var Component = React.createClass({
       if (!_.isUndefined(task)) {
         var state = this.props.collection.states.tryGet(task.get('state_id'), 'Undefined');
         var assignee = this.props.collection.users.tryGet(task.get('assigned_id'), 'Not assigned');
-        var comments = this.props.collection.comments.where({task_id: task.get('id')});
+        var comments = this.props.collection.comments;
         var users = this.props.collection.users;
         return {
           task: task,
@@ -161,16 +161,59 @@ Component.Description = React.createClass({
 });
 
 Component.Comments = React.createClass({
+  formName: 'comment-form',
+  addFormActions: function() {
+      var rules = {
+        name: {
+          identifier  : 'comment',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter comment text'
+            }
+          ]
+        },
+      };
+
+      var settings = {
+        onSuccess: this.handleFormSubmit
+      };
+
+      $('#' + this.formName).form(rules, settings);
+  },
+  componentDidMount: function () {    
+      this.addFormActions();
+  },
+  handleFormSubmit: function(e) {
+    e.preventDefault();
+    var comment = React.findDOMNode(this.refs.comment).value.trim();    
+    if (!comment) {
+      return;
+    }
+    console.log(this);
+    var formElem = '#' + this.formName;
+    this.props.data.comments.create(
+      {        
+        message: comment, 
+        task_id: this.props.data.task.get('id'), 
+        created_id: window.app.session.user.get('id'),
+        created_date: Math.floor(+new Date()/1000)
+      }
+    ); 
+    $(formElem).form('reset');
+
+  },
   render: function() {    
     var users = this.props.data.users;
+    var task = this.props.data.task;
     return (
         <div className='ui comments'>
           <h3 className='ui dividing header'>Comments</h3>
           {
             this.props.data.comments
             .filter(
-                function (comment) {
-                    return true;
+                function (comment) {                    
+                    return comment.get('task_id') == task.get('id');
                 })
             .map(
                 function (comment) {
@@ -180,9 +223,9 @@ Component.Comments = React.createClass({
             )
           }     
           
-          <form className='ui reply form'>
+          <form className='ui reply form' id={this.formName}>
             <div className='field'>
-              <textarea></textarea>
+              <textarea ref='comment' name='comment'></textarea>
             </div>
             <div className='ui blue labeled submit icon button'>
               <i className='icon edit'></i> Add Reply

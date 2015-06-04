@@ -23,7 +23,7 @@ var Component = React.createClass({
             }
           ]
         },
-        userame: {
+        username: {
           identifier  : 'username',
           rules: [
             {
