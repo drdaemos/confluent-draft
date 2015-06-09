@@ -39,6 +39,23 @@ window.app.session.checkAuth({
 
     // Start the backbone routing once we have captured a user's auth status
     complete: function(){
+        //require allllllll collections        
+        var Tasks = require('scripts/collections/Tasks');
+        var TaskStates = require('scripts/collections/TaskStates');
+        var Users = require('scripts/collections/Users');
+        var TaskComments = require('scripts/collections/TaskComments');
+        var Projects = require('scripts/collections/Projects');
+        var Roles = require('scripts/collections/Roles');
+        var ProjectStates = require('scripts/collections/ProjectStates');   
+
+        window.app.collections.tasks = new Tasks();     
+        window.app.collections.taskStates = new TaskStates();     
+        window.app.collections.users = new Users();     
+        window.app.collections.taskComments = new TaskComments();     
+        window.app.collections.projects = new Projects();     
+        window.app.collections.roles = new Roles();     
+        window.app.collections.projectStates = new ProjectStates();     
+
         Backbone.history.start();
 
         // HTML5 pushState for URLs without hashbangs
@@ -47,3 +64,5 @@ window.app.session.checkAuth({
         // else 
     }
 });
+
+

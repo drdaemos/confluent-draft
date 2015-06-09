@@ -22,7 +22,12 @@ var Component = React.createClass({
             && this.props.collection.roles.fetched;
     },
     componentDidMount: function() {
-        $('#' + this.state.id + ' .ui.dimmer').dimmer('show');
+        if (!this.isDataReady()) {
+            this.showDimmer();
+        }
+    },
+    showDimmer: function() {
+        $('#' + this.state.id + ' .ui.dimmer').dimmer('show'); 
     },
     hideDimmer: function() {
         $('#' + this.state.id + ' .ui.dimmer').dimmer('hide'); 

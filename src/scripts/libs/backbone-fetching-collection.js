@@ -4,6 +4,16 @@ var _ = require('underscore');
 _.extend(Backbone.Collection.prototype, {
     fetched: false,
 
+    initialize: function(){
+        this.fetchWithCallbacks();
+
+        setInterval(_.bind(this.fetchWithCallbacks, this), 5000);
+    },
+
+    canFetch: function () {
+        return window.app.session.get('logged_in');
+    },
+
     tryGet: function (id, defaultValue, field) {
     	if (!_.isUndefined(this.get(id))) {
     		if (!_.isUndefined(field) && !_.isUndefined(this.get(id).get(field))) {
@@ -15,6 +25,16 @@ _.extend(Backbone.Collection.prototype, {
     		return defaultValue;
     	}
     },
+
+    fetchWithCallbacks: function () {
+        if (this.canFetch()) {
+            this.fetch({
+                success: this.fetchSuccess,
+                error: this.fetchError
+            });
+        }
+    },
+
     fetchSuccess: function (collection, response) {
     	collection.fetched = true;
     	collection.trigger('update');

@@ -7,17 +7,18 @@ var Task = require('scripts/models/Task');
 
 var Tasks = Backbone.Collection.extend({
 	model: Task,	
+	key: 'tasks',
 
 	url: function(){
 	    return window.app.API + '/tasks';
 	},
 
-	initialize: function(){
-        this.fetch({
-            success: this.fetchSuccess,
-            error: this.fetchError
-        });
-    },    
+	// initialize: function(){
+ //        this.fetch({
+ //            success: this.fetchSuccess,
+ //            error: this.fetchError
+ //        });
+ //    },    
 });
 
 _.bindAll(Tasks, _.functions(Tasks));

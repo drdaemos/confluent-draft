@@ -11,15 +11,11 @@ var _ = require('underscore');
 var Page = require('scripts/components/Page');
 var Profile = require('scripts/components/widgets/Profile');
 
-// Data
-var Roles = require('scripts/collections/Roles');
-var Users = require('scripts/collections/Users');
-  
 var Component = React.createClass({
   render: function() {  	 	
   	var data = {
-  		roles: new Roles(),
-  		users: new Users(),
+  		roles: window.app.collections.roles,
+  		users: window.app.collections.users,
   	};
     return (
 	    <Page>

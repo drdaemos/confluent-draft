@@ -7,17 +7,18 @@ var TaskState = require('scripts/models/TaskState');
 
 var TaskStates = Backbone.Collection.extend({
 	model: TaskState,
+	key: 'taskStates',
 
 	url: function(){
 	    return window.app.API + '/taskstates';
 	},
 
-	initialize: function(){
-        this.fetch({
-            success: this.fetchSuccess,
-            error: this.fetchError
-        });
-    },
+	// initialize: function(){
+ //        this.fetch({
+ //            success: this.fetchSuccess,
+ //            error: this.fetchError
+ //        });
+ //    },
 });
 
 _.bindAll(TaskStates, _.functions(TaskStates));

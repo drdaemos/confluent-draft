@@ -26,16 +26,12 @@ var Component = React.createClass({
   },
   componentDidMount: function() {  
       if (!this.isDataReady()) {
-          this.showDimmer();
-      }
-  },
-  componentWillUpdate: function() {    
-      if (this.isDataReady()) {     
-        var data = this.getDataFromQuery();
-        console.log(data);
+        this.showDimmer();
+      } else {
+        var data = this.getDataFromQuery(); 
         if(_.isUndefined(data)){          
           window.app.router.notFound();
-        }
+        }       
       }
   },
   componentDidUpdate: function() { 

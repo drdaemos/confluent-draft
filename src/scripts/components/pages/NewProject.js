@@ -10,17 +10,12 @@ var _ = require('underscore');
 // Elements
 var Page = require('scripts/components/Page');
 var ProjectForm = require('scripts/components/widgets/ProjectForm');
-
-// Data
-var Users = require('scripts/collections/Users');
-var ProjectsData = require('scripts/collections/Projects');
-var ProjectStates = require('scripts/collections/ProjectStates');
   
 var Component = React.createClass({
   render: function() {  	
   	var data = {
-  		states: new ProjectStates(),
-  		projects: new ProjectsData()
+  		states: window.app.collections.projectStates,
+  		projects: window.app.collections.projects,
   	};
     return (
 	    <Page>

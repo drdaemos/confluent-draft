@@ -7,17 +7,18 @@ var ProjectState = require('scripts/models/ProjectState');
 
 var ProjectStates = Backbone.Collection.extend({
 	model: ProjectState,
+	key: 'projectStates',
     
 	url: function(){
 	    return window.app.API + '/projectstates';
 	},
 
-	initialize: function(){
-        this.fetch({
-            success: this.fetchSuccess,
-            error: this.fetchError
-        });
-    },
+	// initialize: function(){
+ //        this.fetch({
+ //            success: this.fetchSuccess,
+ //            error: this.fetchError
+ //        });
+ //    },
 });
 
 _.bindAll(ProjectStates, _.functions(ProjectStates));

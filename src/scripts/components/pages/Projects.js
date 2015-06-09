@@ -11,20 +11,14 @@ var _ = require('underscore');
 var Page = require('scripts/components/Page');
 var Projects = require('scripts/components/widgets/Projects');
 var ProjectFilters = require('scripts/components/widgets/ProjectFilters');
-
-// Data
-var Tasks = require('scripts/collections/Tasks');
-var Users = require('scripts/collections/Users');
-var ProjectsData = require('scripts/collections/Projects');
-var ProjectStates = require('scripts/collections/ProjectStates');
   
 var Component = React.createClass({
   render: function() {  	
   	var data = {
-  		tasks: new Tasks(),
-  		states: new ProjectStates(), 
-  		users: new Users(),
-  		projects: new ProjectsData()
+  		tasks: window.app.collections.tasks,
+  		states: window.app.collections.projectStates, 
+  		users: window.app.collections.users,
+  		projects: window.app.collections.projects,
   	};
     return (
 	    <Page>
