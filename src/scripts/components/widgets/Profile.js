@@ -60,7 +60,7 @@ var Component = React.createClass({
         }
         return (
             <Widget width={'twelve'} title={'Profile'} id={this.state.id}>
-                <div className='ui grid'>
+                <div className='ui stackable grid'>
                         {ready && !_.isUndefined(user)
                             ? <Component.Profile user={user} />
                             : ''

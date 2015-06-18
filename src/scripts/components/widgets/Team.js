@@ -43,7 +43,7 @@ var Component = React.createClass({
         var ready = this.isDataReady();
         return (
             <Widget width={'sixteen'} title={'Team'} id={this.state.id}>
-                <div className='ui four column grid cards'>
+                <div className='ui stackable four column grid cards'>
                     {ready ?
                         users
                         .filter(
