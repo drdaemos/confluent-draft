@@ -45,7 +45,7 @@ Header.Navbar = React.createClass({
 		  userButton = <Header.Navbar.Anonymous />;
 		}		
 	    return (
-			<div className='ui computer tablet only stackable navbar menu inverted grid' id={this.state.id}>
+			<div className='ui computer tablet only stackable navbar menu inverted page grid' id={this.state.id}>
 		  		<a className='launch item active' href='#dashboard'>
 			      <span> Dashboard </span>
 			    </a>
